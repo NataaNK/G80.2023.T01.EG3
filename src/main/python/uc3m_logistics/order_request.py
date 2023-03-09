@@ -13,6 +13,8 @@ class OrderRequest:
         self.__zip_code = zip_code
         justnow = datetime.utcnow()
         self.__time_stamp = datetime.timestamp(justnow)
+        # Necesario para que me guarde no se qué
+        self.__order_id = hashlib.md5(self.__str__().encode()).hexdigest()
 
     def __str__(self):
         return "OrderRequest:" + json.dumps(self.__dict__)
