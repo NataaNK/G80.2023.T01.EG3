@@ -1,4 +1,6 @@
-"""Exception for the order_management module"""
+"""Autores: Natalia Rodríguez Navarro, Alberto Penas Díaz
+
+Excpciones del módulo order_manager"""
 
 class OrderManagementException(Exception):
     """Personalised exception for Order Management"""
