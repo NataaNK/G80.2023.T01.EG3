@@ -45,7 +45,7 @@ class OrderManager:
             validate = False
         return validate
 
-    def register_order(product_id, order_type, delivery_address, phone_number, zip_code):
+    def register_order(self, product_id, order_type, delivery_address, phone_number, zip_code):
         """
         Recibe la información de un pedido y si los datos recibidos son correctos,
         el componente obtendrá una firma mediante el algoritmo MD5. (Este valor MD5
@@ -56,5 +56,5 @@ class OrderManager:
         my_order = OrderRequest(product_id, order_type, delivery_address, phone_number, zip_code)
 
 
-        return str(my_order)
+        return my_order.order_id
 
