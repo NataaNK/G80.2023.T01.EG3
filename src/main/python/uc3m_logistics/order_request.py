@@ -60,7 +60,7 @@ class OrderRequest:
     @property
     def order_id( self ):
         """Returns the md5 signature"""
-        return hashlib.md5(self.__str__().encode()).hexdigest()
+        return self.__order_id
 
     @property
     def zip_code( self ):
