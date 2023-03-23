@@ -14,6 +14,7 @@ from .order_request import OrderRequest
 # GLOBAL VARIABLES
 eanPattern = re.compile("[0-9]{13}")
 Phone_number_pattern = re.compile("[0-9]{9}")
+zip_code_pattern = re.compile("[0-9]{5}")
 
 class OrderManager:
     """Class for providing the methods for managing the orders"""
@@ -90,6 +91,21 @@ class OrderManager:
         if Phone_number_pattern.fullmatch(number) is None:
             raise ValueError("Invalid Phone Number")
 
+    def validate_zip_code(self, zip):
+        """
+        Lanza una excepción si el código zip no es válido
+        """
+        validate = True
+        if zip_code_pattern.fullmatch(zip) is None:
+            validate = False
+        else:
+            if int(zip[0:2]) < 1 or int(zip[0:2]) > 52:
+                validate = False
+
+        if not validate:
+            raise ValueError("Invalid Zip Code")
+
+
 
     def register_order(self, product_id, order_type, delivery_address, phone_number, zip_code):
         """
@@ -119,6 +135,10 @@ class OrderManager:
         except ValueError as vl:
             raise OrderManagementException("Invalid Phone Number") from vl
 
+        try:
+            self.validate_zip_code(zip_code)
+        except ValueError as vl:
+            raise OrderManagementException("Invalid Zip Code") from vl
 
         my_order = OrderRequest(product_id, order_type, delivery_address,
                                 phone_number, zip_code)
