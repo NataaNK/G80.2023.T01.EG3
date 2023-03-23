@@ -41,6 +41,7 @@ class TestOrderManager(TestCase):
                 found = True
 
         self.assertTrue(found)
+        #comentario de prueba
 
     def test_register_order_nok_1(self):
         """
