@@ -338,7 +338,171 @@ class TestOrderManager(TestCase):
 
         self.assertEqual("Invalid Phone Number", cm.exception.message)
 
+
     # TESTS ZIP CODE
+
+    @freeze_time("2023-03-09")
+    def test_register_order_ok8(self):
+        """
+        Zip code first two digits = 01
+        """
+        my_order = OrderManager()
+        my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
+                                           "123456789", "01345")
+
+        self.assertEqual("fb6f363e6bc78ebdad9e54ee6a3bde87", my_value)
+
+        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
+        file_store = JSON_FILES_PATH + "store_order_request.json"
+
+        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+            data_list = json.load(file)
+        found = False
+
+        for item in data_list:
+            if item["_OrderRequest__order_id"] == "fb6f363e6bc78ebdad9e54ee6a3bde87":
+                found = True
+
+        self.assertTrue(found)
+
+    @freeze_time("2023-03-09")
+    def test_register_order_ok9(self):
+        """
+        Zip code first two digits = 02
+        """
+        my_order = OrderManager()
+        my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
+                                           "123456789", "02345")
+
+        self.assertEqual("303387598741da38c341cc23e1305712", my_value)
+
+        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
+        file_store = JSON_FILES_PATH + "store_order_request.json"
+
+        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+            data_list = json.load(file)
+        found = False
+
+        for item in data_list:
+            if item["_OrderRequest__order_id"] == "303387598741da38c341cc23e1305712":
+                found = True
+
+        self.assertTrue(found)
+
+    @freeze_time("2023-03-09")
+    def test_register_order_ok10(self):
+        """
+        Zip code first two digits = 51
+        """
+        my_order = OrderManager()
+        my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
+                                           "123456789", "51345")
+
+        self.assertEqual("706c656dcbbad90fd668517cb17246d6", my_value)
+
+        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
+        file_store = JSON_FILES_PATH + "store_order_request.json"
+
+        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+            data_list = json.load(file)
+        found = False
+
+        for item in data_list:
+            if item["_OrderRequest__order_id"] == "706c656dcbbad90fd668517cb17246d6":
+                found = True
+
+        self.assertTrue(found)
+
+    @freeze_time("2023-03-09")
+    def test_register_order_ok11(self):
+        """
+        Zip code first two digits = 52
+        """
+        my_order = OrderManager()
+        my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
+                                           "123456789", "52345")
+
+        self.assertEqual("c86db80eea5602f18c378c72a7b81de9", my_value)
+
+        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
+        file_store = JSON_FILES_PATH + "store_order_request.json"
+
+        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+            data_list = json.load(file)
+        found = False
+
+        for item in data_list:
+            if item["_OrderRequest__order_id"] == "c86db80eea5602f18c378c72a7b81de9":
+                found = True
+
+        self.assertTrue(found)
+
+    def test_register_order_nok_12(self):
+        """
+        Zip code first two digits = 00
+        """
+        my_order = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
+                                           "123456789", "00345")
+
+        self.assertEqual("Invalid Zip Code", cm.exception.message)
+
+    def test_register_order_nok_13(self):
+        """
+        Zip code first two digits = 53
+        """
+        my_order = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
+                                           "123456789", "53345")
+
+        self.assertEqual("Invalid Zip Code", cm.exception.message)
+
+    def test_register_order_nok_14(self):
+        """
+        Zip code length = 4
+        """
+        my_order = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
+                                           "123456789", "2834")
+
+        self.assertEqual("Invalid Zip Code", cm.exception.message)
+
+    def test_register_order_nok_15(self):
+        """
+        Zip code length = 6
+        """
+        my_order = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
+                                           "123456789", "283455")
+
+        self.assertEqual("Invalid Zip Code", cm.exception.message)
+
+    def test_register_order_nok_16(self):
+        """
+        Zip code Not a Number
+        """
+        my_order = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
+                                           "123456789", "283AA")
+
+        self.assertEqual("Invalid Zip Code", cm.exception.message)
+
+    # TESTS SALIDA MD5
+    # Es una función interna, no es necesario comprobar su validez
+
+    # TESTS SALIDA JSON
+    # Ya comprobado en los tests válidos de las entradas
+
 
 
 if __name__ == '__main__':
