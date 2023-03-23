@@ -31,23 +31,27 @@ class OrderManager:
         validate = True
         # Comprobación de sintaxis
         if eanPattern.fullmatch(ean13_code) is None:
-            return not validate
-
-        suma = 0
-        # Índice
-        i = 0
-        # Según la  conveción EAN13 el último dígito del código debe
-        # ser la resta de la potencia de diez más cercana a
-        # la suma de los pares multiplicados por tres y los impares
-        # menos ese mismo número.
-        while i != len(ean13_code) - 1:
-            suma += int(ean13_code[i]) * 3 \
-                    if (i % 2) != 0 \
-                    else int(ean13_code[i])
-            i += 1
-
-        if int(ean13_code[-1]) != (10 - suma % 10):
             validate = False
+        else:
+            suma = 0
+            # Índice
+            i = 0
+            # Según la  conveción EAN13 el último dígito del código debe
+            # ser la resta de la potencia de diez más cercana a
+            # la suma de los pares multiplicados por tres y los impares
+            # menos ese mismo número.
+            while i != len(ean13_code) - 1:
+                suma += int(ean13_code[i]) * 3 \
+                        if (i % 2) != 0 \
+                        else int(ean13_code[i])
+                i += 1
+
+            if int(ean13_code[-1]) != (10 - suma % 10):
+                validate = False
+
+        if not validate:
+            raise ValueError("Product ID should be an EAN13")
+
         return validate
 
     def register_order(self, product_id, order_type, delivery_address, phone_number, zip_code):
@@ -58,8 +62,26 @@ class OrderManager:
         identificador del pedido y en adelante se denominará OrderID. Además, se
         almacena en un fichero todos los datos de la solicitud.
         """
-        try not self.validate_ean13(product_id):
-            raise
+        try:
+            self.validate_ean13(product_id)
+        except ValueError as vl:
+            raise OrderManagementException("Product ID should be an EAN13") from vl
+
+        try:
+            self.validate_order_type(order_type)
+        except ValueError as vl:
+            raise OrderManagementException("Invalid Order Type") from vl
+
+        try:
+            self.validate_deivery_address(delivery_address)
+        except ValueError as vl:
+            raise OrderManagementException("Invalid Delivery Address") from vl
+
+        try:
+            self.validate_phone_number(phone_number)
+        except ValueError as vl:
+            raise OrderManagementException("Invalid Phone Number") from vl
+
 
         my_order = OrderRequest(product_id, order_type, delivery_address,
                                 phone_number, zip_code)
