@@ -13,6 +13,7 @@ from .order_request import OrderRequest
 
 # GLOBAL VARIABLES
 eanPattern = re.compile("[0-9]{13}")
+Phone_number_pattern = re.compile("[0-9]{9}")
 
 class OrderManager:
     """Class for providing the methods for managing the orders"""
@@ -54,6 +55,42 @@ class OrderManager:
 
         return validate
 
+    def validate_order_type(self, order_type):
+        """
+        Lanza una excepción si el tipo de de envío es incorrecto
+        """
+        if order_type != "premium" and order_type != "regular":
+            raise ValueError("Invalid Order Type")
+
+    def validate_deivery_address(self, delivery):
+        """
+        Lanza una excepción si la dirección es incorrecta
+        (entre 20 y 100 caracteres con al menos 2 cadenas separadas por un espacio blanco)
+        """
+
+        if len(delivery) < 20 or len(delivery) > 100:
+            correct_lenght = False
+        else:
+            correct_lenght = True
+
+        separation = False
+        i = 0
+        while not separation and i < len(delivery):
+            if delivery[i] == ' ':
+                separation = True
+            i += 1
+
+        if not correct_lenght or not separation:
+            raise ValueError("Invalid Delivery Address")
+
+    def validate_phone_number(self, number):
+        """
+        Lanza una excepción si el número de teléfono es incorrecto
+        """
+        if Phone_number_pattern.fullmatch(number) is None:
+            raise ValueError("Invalid Phone Number")
+
+
     def register_order(self, product_id, order_type, delivery_address, phone_number, zip_code):
         """
         Recibe la información de un pedido y si los datos recibidos son correctos,
@@ -88,8 +125,6 @@ class OrderManager:
 
         JSON_STORE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
         file_store = JSON_STORE_PATH + "store_order_request.json"
-        if os.path.isfile(file_store):
-            os.remove(file_store)
 
         try:
             with open(file_store, "r", encoding="UTF-8", newline="") as file:
