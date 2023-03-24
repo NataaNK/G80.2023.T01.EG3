@@ -1,7 +1,10 @@
 """Autores: Natalia Rodríguez Navarro, Alberto Penas Díaz
 
-OrderManager.py: En este módulo se valida el código de barras según
-la norma EAN13. También se generan las excepciones"""
+OrderManager.py: En este módulo se recibe la información de un pedido,
+se obtiene su firma MD5 y se guardan los datos en un fichero (antes se
+valida el código del producto según la norma EAN13, los tipos de envíos,
+las direcciones, teléfonos y códigos postales generando las excepciones
+correspondientes cuando éstos no son válidos"""
 
 import re
 import json
@@ -25,7 +28,7 @@ class OrderManager:
     def validate_ean13(ean13_code):
         """
             Esta función verifica que el código proporcionado como ean13
-            sea sintácticamente correcto ademmás de comprobar si el último
+            sea sintácticamente correcto además de comprobar si el último
             dígito de control es el correcto.
             :param ean13: str
             :return: bool
@@ -51,6 +54,7 @@ class OrderManager:
             if int(ean13_code[-1]) != (10 - suma % 10):
                 validate = False
 
+        # Lanzamos excepción si el código es incorrecto
         if not validate:
             raise ValueError("Product ID should be an EAN13")
 
@@ -58,7 +62,7 @@ class OrderManager:
 
     def validate_order_type(self, order_type):
         """
-        Lanza una excepción si el tipo de de envío es incorrecto
+        Lanza una excepción si el tipo de envío es incorrecto
         """
         if order_type != "premium" and order_type != "regular":
             raise ValueError("Invalid Order Type")
@@ -66,9 +70,9 @@ class OrderManager:
     def validate_deivery_address(self, delivery):
         """
         Lanza una excepción si la dirección es incorrecta
-        (entre 20 y 100 caracteres con al menos 2 cadenas separadas por un espacio blanco)
+        (entre 20 y 100 caracteres con al menos 2 cadenas separadas
+        por un espacio blanco)
         """
-
         if len(delivery) < 20 or len(delivery) > 100:
             correct_lenght = False
         else:
@@ -106,15 +110,16 @@ class OrderManager:
             raise ValueError("Invalid Zip Code")
 
 
-
     def register_order(self, product_id, order_type, delivery_address, phone_number, zip_code):
         """
         Recibe la información de un pedido y si los datos recibidos son correctos,
         el componente obtendrá una firma mediante el algoritmo MD5. (Este valor MD5
         se obtiene del método __str__ de la clase OrderRequest. Esta firma será el
         identificador del pedido y en adelante se denominará OrderID. Además, se
-        almacena en un fichero todos los datos de la solicitud.
+        almacena en un fichero json todos los datos de la solicitud.
         """
+
+        # Excepciones sobre los datos del pedido
         try:
             self.validate_ean13(product_id)
         except ValueError as vl:
@@ -140,9 +145,11 @@ class OrderManager:
         except ValueError as vl:
             raise OrderManagementException("Invalid Zip Code") from vl
 
+        # Generamos el objeto "pedido"
         my_order = OrderRequest(product_id, order_type, delivery_address,
                                 phone_number, zip_code)
 
+        # Añadimos la información del pedido a una lista de json's
         JSON_STORE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
         file_store = JSON_STORE_PATH + "store_order_request.json"
 
@@ -162,4 +169,5 @@ class OrderManager:
         except FileNotFoundError as ex:
             raise OrderManagementException("Wrong file or file path") from ex
 
+        # Devolvemos el hash MD5
         return my_order.order_id

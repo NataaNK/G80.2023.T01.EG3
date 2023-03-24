@@ -1,6 +1,6 @@
 """Autores: Natalia Rodríguez Navarro, Alberto Penas Díaz
 
-Excpciones del módulo order_manager"""
+Generador de excpciones para el módulo order_manager"""
 
 class OrderManagementException(Exception):
     """Personalised exception for Order Management"""

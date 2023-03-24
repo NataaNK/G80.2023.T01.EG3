@@ -1,4 +1,8 @@
-"""class for testing the regsiter_order method"""
+"""Autores: Natalia Rodríguez Navarro, Alberto Penas Díaz
+
+test_register_order.py: Clase para testear el método
+register_order()"""
+
 from unittest import TestCase
 import json
 import os
@@ -8,9 +12,12 @@ from uc3m_logistics import OrderManager
 from uc3m_logistics import OrderManagementException
 
 class TestOrderManager(TestCase):
-    """class for testing the register_order method"""
 
-    # TESTS ALL CORRECT:
+    # TEST ALL CORRECT:
+    # product_id correct and 13 digits
+    # order_type = "premium"
+    # delivery_adress only one blank space
+    # zip_code length = 5
 
     @freeze_time("2023-03-09")
     def test_register_order_ok_1(self):
@@ -23,29 +30,36 @@ class TestOrderManager(TestCase):
             os.remove(file_store)
 
         my_order = OrderManager()
-        my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, Galapagar",
-                                           "123456789", "28345")
+        my_value = my_order.register_order(product_id=data[0], order_type=data[1],
+                                           delivery_address=data[2], phone_number=data[3],
+                                           zip_code=data[4])
 
-        self.assertEqual("ba862867cb7761b9364a35f6a8d9801c", my_value)
+        self.assertEqual("03de4c31222c38cbce5957655a0b5f28", my_value)
 
         """
         Comprobación de fichero generado válido
         """
-
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
         file_store = JSON_FILES_PATH + "store_order_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
-        found = False
 
+        # Comprobamos que los datos introducidos en el fichero son correctos
+        found = False
         for item in data_list:
-            if item["_OrderRequest__order_id"] == "ba862867cb7761b9364a35f6a8d9801c":
+            if (item["_OrderRequest__product_id"] == data[0]
+                and item["_OrderRequest__delivery_address"] == data[2]
+                and item["_OrderRequest__order_type"] == data[1]
+                and item["_OrderRequest__phone_number"] == data[3]
+                and item["_OrderRequest__zip_code"] == data[4]
+                and item["_OrderRequest__time_stamp"] == 1678320000.0
+                and item["_OrderRequest__order_id"] == my_value):
                 found = True
 
         self.assertTrue(found)
 
-    # TESTS PRODUCT ID:
+    # TESTS PRODUCT ID
 
     def test_register_order_nok_1(self):
         """
@@ -102,6 +116,8 @@ class TestOrderManager(TestCase):
         """
         order_type = "regular"
         """
+        data = ["8435464158875", "regular", "Calle Colmenarejo, 5", "123456789", "28345"]
+
         my_order = OrderManager()
         my_value = my_order.register_order("8435464158875", "regular", "Calle Colmenarejo, 5",
                                            "123456789", "28345")
@@ -114,10 +130,17 @@ class TestOrderManager(TestCase):
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
-        found = False
 
+        # Comprobamos que los datos introducidos en el fichero son correctos
+        found = False
         for item in data_list:
-            if item["_OrderRequest__order_id"] == "4565371337e0ce39202cbdcba5ba7100":
+            if (item["_OrderRequest__product_id"] == data[0]
+                    and item["_OrderRequest__delivery_address"] == data[2]
+                    and item["_OrderRequest__order_type"] == data[1]
+                    and item["_OrderRequest__phone_number"] == data[3]
+                    and item["_OrderRequest__zip_code"] == data[4]
+                    and item["_OrderRequest__time_stamp"] == 1678320000.0
+                    and item["_OrderRequest__order_id"] == my_value):
                 found = True
 
         self.assertTrue(found)
@@ -141,6 +164,8 @@ class TestOrderManager(TestCase):
         """
         Adress 20 char
         """
+        data = ["8435464158875", "premium", "Calle Colmenarejo, 5", "123456789", "28345"]
+
         my_order = OrderManager()
         my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
                                            "123456789", "28345")
@@ -166,6 +191,8 @@ class TestOrderManager(TestCase):
         """
         Adress 21 char
         """
+        data = ["8435464158875", "premium", "Calle Colmenarejo, 52", "123456789", "28345"]
+
         my_order = OrderManager()
         my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 52",
                                            "123456789", "28345")
@@ -191,6 +218,10 @@ class TestOrderManager(TestCase):
         """
         Adress 99 char
         """
+        data = ["8435464158875", "premium",
+                "Calle Colmenarejo de los Rosales, Olivares del Júcar, Provincia de Madrid, España,  52, planta 12BA",
+                "123456789", "28345"]
+
         my_order = OrderManager()
         my_value = my_order.register_order("8435464158875", "premium",
                                            "Calle Colmenarejo de los Rosales, Olivares del Júcar, Provincia de Madrid, España,  52, planta 12BA",
@@ -217,6 +248,10 @@ class TestOrderManager(TestCase):
         """
         Adress 100 char
         """
+        data = ["8435464158875", "premium",
+                "Calle Colmenarejo de los Rosales, Olivares del Júcar, Provincia de Madrid, España,  52, planta 12BAC",
+                "123456789", "28345"]
+
         my_order = OrderManager()
         my_value = my_order.register_order("8435464158875", "premium",
                                            "Calle Colmenarejo de los Rosales, Olivares del Júcar, Provincia de Madrid, España,  52, planta 12BAC",
@@ -243,6 +278,8 @@ class TestOrderManager(TestCase):
         """
         More than one blank space
         """
+        data = ["8435464158875", "premium", "C/ Colmenarejo, 5, Madrid", "123456789", "28345"]
+
         my_order = OrderManager()
         my_value = my_order.register_order("8435464158875", "premium", "C/ Colmenarejo, 5, Madrid",
                                            "123456789", "28345")
@@ -338,7 +375,6 @@ class TestOrderManager(TestCase):
 
         self.assertEqual("Invalid Phone Number", cm.exception.message)
 
-
     # TESTS ZIP CODE
 
     @freeze_time("2023-03-09")
@@ -346,6 +382,8 @@ class TestOrderManager(TestCase):
         """
         Zip code first two digits = 01
         """
+        data = ["8435464158875", "premium", "Calle Colmenarejo, 5", "123456789", "01345"]
+
         my_order = OrderManager()
         my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
                                            "123456789", "01345")
@@ -370,6 +408,8 @@ class TestOrderManager(TestCase):
         """
         Zip code first two digits = 02
         """
+        data = ["8435464158875", "premium", "Calle Colmenarejo, 5", "123456789", "02345"]
+
         my_order = OrderManager()
         my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
                                            "123456789", "02345")
@@ -394,6 +434,8 @@ class TestOrderManager(TestCase):
         """
         Zip code first two digits = 51
         """
+        data = ["8435464158875", "premium", "Calle Colmenarejo, 5", "123456789", "51345"]
+
         my_order = OrderManager()
         my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
                                            "123456789", "51345")
@@ -418,6 +460,8 @@ class TestOrderManager(TestCase):
         """
         Zip code first two digits = 52
         """
+        data = ["8435464158875", "premium", "Calle Colmenarejo, 5", "123456789", "52345"]
+
         my_order = OrderManager()
         my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
                                            "123456789", "52345")
