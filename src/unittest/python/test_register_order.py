@@ -29,6 +29,9 @@ class TestOrderManager(TestCase):
         if os.path.isfile(file_store):
             os.remove(file_store)
 
+        data = ["8435464158875", "premium", "Avenidas Contrarrevolucionarias",
+                "123456789", "28345"]
+
         my_order = OrderManager()
         my_value = my_order.register_order(product_id=data[0], order_type=data[1],
                                            delivery_address=data[2], phone_number=data[3],
@@ -119,8 +122,9 @@ class TestOrderManager(TestCase):
         data = ["8435464158875", "regular", "Calle Colmenarejo, 5", "123456789", "28345"]
 
         my_order = OrderManager()
-        my_value = my_order.register_order("8435464158875", "regular", "Calle Colmenarejo, 5",
-                                           "123456789", "28345")
+        my_value = my_order.register_order(product_id=data[0], order_type=data[1],
+                                           delivery_address=data[2], phone_number=data[3],
+                                           zip_code=data[4])
 
         self.assertEqual("4565371337e0ce39202cbdcba5ba7100", my_value)
 
@@ -167,8 +171,9 @@ class TestOrderManager(TestCase):
         data = ["8435464158875", "premium", "Calle Colmenarejo, 5", "123456789", "28345"]
 
         my_order = OrderManager()
-        my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
-                                           "123456789", "28345")
+        my_value = my_order.register_order(product_id=data[0], order_type=data[1],
+                                           delivery_address=data[2], phone_number=data[3],
+                                           zip_code=data[4])
 
         self.assertEqual("bc468149c36d67d3e9a7e9fabf297f1a", my_value)
 
@@ -180,8 +185,16 @@ class TestOrderManager(TestCase):
             data_list = json.load(file)
         found = False
 
+        # Comprobamos que los datos introducidos en el fichero son correctos
+        found = False
         for item in data_list:
-            if item["_OrderRequest__order_id"] == "bc468149c36d67d3e9a7e9fabf297f1a":
+            if (item["_OrderRequest__product_id"] == data[0]
+                    and item["_OrderRequest__delivery_address"] == data[2]
+                    and item["_OrderRequest__order_type"] == data[1]
+                    and item["_OrderRequest__phone_number"] == data[3]
+                    and item["_OrderRequest__zip_code"] == data[4]
+                    and item["_OrderRequest__time_stamp"] == 1678320000.0
+                    and item["_OrderRequest__order_id"] == my_value):
                 found = True
 
         self.assertTrue(found)
@@ -194,8 +207,9 @@ class TestOrderManager(TestCase):
         data = ["8435464158875", "premium", "Calle Colmenarejo, 52", "123456789", "28345"]
 
         my_order = OrderManager()
-        my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 52",
-                                           "123456789", "28345")
+        my_value = my_order.register_order(product_id=data[0], order_type=data[1],
+                                           delivery_address=data[2], phone_number=data[3],
+                                           zip_code=data[4])
 
         self.assertEqual("09e5d8f8ce7ca08b8aaf2aee97c0b6b5", my_value)
 
@@ -207,8 +221,16 @@ class TestOrderManager(TestCase):
             data_list = json.load(file)
         found = False
 
+        # Comprobamos que los datos introducidos en el fichero son correctos
+        found = False
         for item in data_list:
-            if item["_OrderRequest__order_id"] == "09e5d8f8ce7ca08b8aaf2aee97c0b6b5":
+            if (item["_OrderRequest__product_id"] == data[0]
+                    and item["_OrderRequest__delivery_address"] == data[2]
+                    and item["_OrderRequest__order_type"] == data[1]
+                    and item["_OrderRequest__phone_number"] == data[3]
+                    and item["_OrderRequest__zip_code"] == data[4]
+                    and item["_OrderRequest__time_stamp"] == 1678320000.0
+                    and item["_OrderRequest__order_id"] == my_value):
                 found = True
 
         self.assertTrue(found)
@@ -223,9 +245,9 @@ class TestOrderManager(TestCase):
                 "123456789", "28345"]
 
         my_order = OrderManager()
-        my_value = my_order.register_order("8435464158875", "premium",
-                                           "Calle Colmenarejo de los Rosales, Olivares del Júcar, Provincia de Madrid, España,  52, planta 12BA",
-                                           "123456789", "28345")
+        my_value = my_order.register_order(product_id=data[0], order_type=data[1],
+                                           delivery_address=data[2], phone_number=data[3],
+                                           zip_code=data[4])
 
         self.assertEqual("bbd5da1ff08e8c4239fd942fc9a0cdc7", my_value)
 
@@ -237,8 +259,16 @@ class TestOrderManager(TestCase):
             data_list = json.load(file)
         found = False
 
+        # Comprobamos que los datos introducidos en el fichero son correctos
+        found = False
         for item in data_list:
-            if item["_OrderRequest__order_id"] == "bbd5da1ff08e8c4239fd942fc9a0cdc7":
+            if (item["_OrderRequest__product_id"] == data[0]
+                    and item["_OrderRequest__delivery_address"] == data[2]
+                    and item["_OrderRequest__order_type"] == data[1]
+                    and item["_OrderRequest__phone_number"] == data[3]
+                    and item["_OrderRequest__zip_code"] == data[4]
+                    and item["_OrderRequest__time_stamp"] == 1678320000.0
+                    and item["_OrderRequest__order_id"] == my_value):
                 found = True
 
         self.assertTrue(found)
@@ -253,9 +283,9 @@ class TestOrderManager(TestCase):
                 "123456789", "28345"]
 
         my_order = OrderManager()
-        my_value = my_order.register_order("8435464158875", "premium",
-                                           "Calle Colmenarejo de los Rosales, Olivares del Júcar, Provincia de Madrid, España,  52, planta 12BAC",
-                                           "123456789", "28345")
+        my_value = my_order.register_order(product_id=data[0], order_type=data[1],
+                                           delivery_address=data[2], phone_number=data[3],
+                                           zip_code=data[4])
 
         self.assertEqual("54f0c7650120aa61b3fcf1cb67302ffa", my_value)
 
@@ -265,10 +295,17 @@ class TestOrderManager(TestCase):
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
-        found = False
 
+        # Comprobamos que los datos introducidos en el fichero son correctos
+        found = False
         for item in data_list:
-            if item["_OrderRequest__order_id"] == "54f0c7650120aa61b3fcf1cb67302ffa":
+            if (item["_OrderRequest__product_id"] == data[0]
+                    and item["_OrderRequest__delivery_address"] == data[2]
+                    and item["_OrderRequest__order_type"] == data[1]
+                    and item["_OrderRequest__phone_number"] == data[3]
+                    and item["_OrderRequest__zip_code"] == data[4]
+                    and item["_OrderRequest__time_stamp"] == 1678320000.0
+                    and item["_OrderRequest__order_id"] == my_value):
                 found = True
 
         self.assertTrue(found)
@@ -281,8 +318,9 @@ class TestOrderManager(TestCase):
         data = ["8435464158875", "premium", "C/ Colmenarejo, 5, Madrid", "123456789", "28345"]
 
         my_order = OrderManager()
-        my_value = my_order.register_order("8435464158875", "premium", "C/ Colmenarejo, 5, Madrid",
-                                           "123456789", "28345")
+        my_value = my_order.register_order(product_id=data[0], order_type=data[1],
+                                           delivery_address=data[2], phone_number=data[3],
+                                           zip_code=data[4])
 
         self.assertEqual("060db6247d46e650f114162f6a1a7030", my_value)
 
@@ -292,10 +330,17 @@ class TestOrderManager(TestCase):
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
-        found = False
 
+        # Comprobamos que los datos introducidos en el fichero son correctos
+        found = False
         for item in data_list:
-            if item["_OrderRequest__order_id"] == "060db6247d46e650f114162f6a1a7030":
+            if (item["_OrderRequest__product_id"] == data[0]
+                    and item["_OrderRequest__delivery_address"] == data[2]
+                    and item["_OrderRequest__order_type"] == data[1]
+                    and item["_OrderRequest__phone_number"] == data[3]
+                    and item["_OrderRequest__zip_code"] == data[4]
+                    and item["_OrderRequest__time_stamp"] == 1678320000.0
+                    and item["_OrderRequest__order_id"] == my_value):
                 found = True
 
         self.assertTrue(found)
@@ -385,8 +430,9 @@ class TestOrderManager(TestCase):
         data = ["8435464158875", "premium", "Calle Colmenarejo, 5", "123456789", "01345"]
 
         my_order = OrderManager()
-        my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
-                                           "123456789", "01345")
+        my_value = my_order.register_order(product_id=data[0], order_type=data[1],
+                                           delivery_address=data[2], phone_number=data[3],
+                                           zip_code=data[4])
 
         self.assertEqual("fb6f363e6bc78ebdad9e54ee6a3bde87", my_value)
 
@@ -395,10 +441,17 @@ class TestOrderManager(TestCase):
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
-        found = False
 
+        # Comprobamos que los datos introducidos en el fichero son correctos
+        found = False
         for item in data_list:
-            if item["_OrderRequest__order_id"] == "fb6f363e6bc78ebdad9e54ee6a3bde87":
+            if (item["_OrderRequest__product_id"] == data[0]
+                    and item["_OrderRequest__delivery_address"] == data[2]
+                    and item["_OrderRequest__order_type"] == data[1]
+                    and item["_OrderRequest__phone_number"] == data[3]
+                    and item["_OrderRequest__zip_code"] == data[4]
+                    and item["_OrderRequest__time_stamp"] == 1678320000.0
+                    and item["_OrderRequest__order_id"] == my_value):
                 found = True
 
         self.assertTrue(found)
@@ -411,8 +464,9 @@ class TestOrderManager(TestCase):
         data = ["8435464158875", "premium", "Calle Colmenarejo, 5", "123456789", "02345"]
 
         my_order = OrderManager()
-        my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
-                                           "123456789", "02345")
+        my_value = my_order.register_order(product_id=data[0], order_type=data[1],
+                                           delivery_address=data[2], phone_number=data[3],
+                                           zip_code=data[4])
 
         self.assertEqual("303387598741da38c341cc23e1305712", my_value)
 
@@ -421,10 +475,17 @@ class TestOrderManager(TestCase):
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
-        found = False
 
+        # Comprobamos que los datos introducidos en el fichero son correctos
+        found = False
         for item in data_list:
-            if item["_OrderRequest__order_id"] == "303387598741da38c341cc23e1305712":
+            if (item["_OrderRequest__product_id"] == data[0]
+                    and item["_OrderRequest__delivery_address"] == data[2]
+                    and item["_OrderRequest__order_type"] == data[1]
+                    and item["_OrderRequest__phone_number"] == data[3]
+                    and item["_OrderRequest__zip_code"] == data[4]
+                    and item["_OrderRequest__time_stamp"] == 1678320000.0
+                    and item["_OrderRequest__order_id"] == my_value):
                 found = True
 
         self.assertTrue(found)
@@ -437,8 +498,9 @@ class TestOrderManager(TestCase):
         data = ["8435464158875", "premium", "Calle Colmenarejo, 5", "123456789", "51345"]
 
         my_order = OrderManager()
-        my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
-                                           "123456789", "51345")
+        my_value = my_order.register_order(product_id=data[0], order_type=data[1],
+                                           delivery_address=data[2], phone_number=data[3],
+                                           zip_code=data[4])
 
         self.assertEqual("706c656dcbbad90fd668517cb17246d6", my_value)
 
@@ -447,10 +509,17 @@ class TestOrderManager(TestCase):
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
-        found = False
 
+        # Comprobamos que los datos introducidos en el fichero son correctos
+        found = False
         for item in data_list:
-            if item["_OrderRequest__order_id"] == "706c656dcbbad90fd668517cb17246d6":
+            if (item["_OrderRequest__product_id"] == data[0]
+                    and item["_OrderRequest__delivery_address"] == data[2]
+                    and item["_OrderRequest__order_type"] == data[1]
+                    and item["_OrderRequest__phone_number"] == data[3]
+                    and item["_OrderRequest__zip_code"] == data[4]
+                    and item["_OrderRequest__time_stamp"] == 1678320000.0
+                    and item["_OrderRequest__order_id"] == my_value):
                 found = True
 
         self.assertTrue(found)
@@ -463,8 +532,9 @@ class TestOrderManager(TestCase):
         data = ["8435464158875", "premium", "Calle Colmenarejo, 5", "123456789", "52345"]
 
         my_order = OrderManager()
-        my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
-                                           "123456789", "52345")
+        my_value = my_order.register_order(product_id=data[0], order_type=data[1],
+                                           delivery_address=data[2], phone_number=data[3],
+                                           zip_code=data[4])
 
         self.assertEqual("c86db80eea5602f18c378c72a7b81de9", my_value)
 
@@ -473,10 +543,17 @@ class TestOrderManager(TestCase):
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
-        found = False
 
+        # Comprobamos que los datos introducidos en el fichero son correctos
+        found = False
         for item in data_list:
-            if item["_OrderRequest__order_id"] == "c86db80eea5602f18c378c72a7b81de9":
+            if (item["_OrderRequest__product_id"] == data[0]
+                    and item["_OrderRequest__delivery_address"] == data[2]
+                    and item["_OrderRequest__order_type"] == data[1]
+                    and item["_OrderRequest__phone_number"] == data[3]
+                    and item["_OrderRequest__zip_code"] == data[4]
+                    and item["_OrderRequest__time_stamp"] == 1678320000.0
+                    and item["_OrderRequest__order_id"] == my_value):
                 found = True
 
         self.assertTrue(found)
@@ -546,8 +623,6 @@ class TestOrderManager(TestCase):
 
     # TESTS SALIDA JSON
     # Ya comprobado en los tests válidos de las entradas
-
-
 
 if __name__ == '__main__':
     unittest.main()
