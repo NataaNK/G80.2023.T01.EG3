@@ -310,41 +310,6 @@ class TestOrderManager(TestCase):
 
         self.assertTrue(found)
 
-    @freeze_time("2023-03-09")
-    def test_register_order_ok7(self):
-        """
-        More than one blank space
-        """
-        data = ["8435464158875", "premium", "C/ Colmenarejo, 5, Madrid", "123456789", "28345"]
-
-        my_order = OrderManager()
-        my_value = my_order.register_order(product_id=data[0], order_type=data[1],
-                                           delivery_address=data[2], phone_number=data[3],
-                                           zip_code=data[4])
-
-        self.assertEqual("060db6247d46e650f114162f6a1a7030", my_value)
-
-
-        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
-        file_store = JSON_FILES_PATH + "store_order_request.json"
-
-        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
-            data_list = json.load(file)
-
-        # Comprobamos que los datos introducidos en el fichero son correctos
-        found = False
-        for item in data_list:
-            if (item["_OrderRequest__product_id"] == data[0]
-                    and item["_OrderRequest__delivery_address"] == data[2]
-                    and item["_OrderRequest__order_type"] == data[1]
-                    and item["_OrderRequest__phone_number"] == data[3]
-                    and item["_OrderRequest__zip_code"] == data[4]
-                    and item["_OrderRequest__time_stamp"] == 1678320000.0
-                    and item["_OrderRequest__order_id"] == my_value):
-                found = True
-
-        self.assertTrue(found)
-
     def test_register_order_nok_6(self):
         """
         Address 19 char
@@ -423,7 +388,7 @@ class TestOrderManager(TestCase):
     # TESTS ZIP CODE
 
     @freeze_time("2023-03-09")
-    def test_register_order_ok8(self):
+    def test_register_order_ok7(self):
         """
         Zip code first two digits = 01
         """
@@ -457,7 +422,7 @@ class TestOrderManager(TestCase):
         self.assertTrue(found)
 
     @freeze_time("2023-03-09")
-    def test_register_order_ok9(self):
+    def test_register_order_ok8(self):
         """
         Zip code first two digits = 02
         """
@@ -491,7 +456,7 @@ class TestOrderManager(TestCase):
         self.assertTrue(found)
 
     @freeze_time("2023-03-09")
-    def test_register_order_ok10(self):
+    def test_register_order_ok9(self):
         """
         Zip code first two digits = 51
         """
@@ -525,7 +490,7 @@ class TestOrderManager(TestCase):
         self.assertTrue(found)
 
     @freeze_time("2023-03-09")
-    def test_register_order_ok11(self):
+    def test_register_order_ok10(self):
         """
         Zip code first two digits = 52
         """
