@@ -1,6 +1,4 @@
-[
-  {
-    "OrderID": "&",
-    "ContactEmail": "emaildeprueba@gmail.com"
-  }
-]
+{
+  "OrderID": "&",
+  "ContactEmail": "emaildeprueba@gmail.com"
+}
