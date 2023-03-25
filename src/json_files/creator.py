@@ -20,4 +20,4 @@ if not SECURITY:
         data.append(new_dict)
 
         with open(file, "w", encoding= "utf8") as file1:
-                json.dump(data, file1, indent=2)
+                json.dump(new_dict, file1, indent=2)

@@ -12,12 +12,15 @@ from pathlib import Path
 import os
 from .order_management_exception import OrderManagementException
 from .order_request import OrderRequest
+from .order_shipping import OrderShipping
 
 
 # GLOBAL VARIABLES
 eanPattern = re.compile("[0-9]{13}")
 Phone_number_pattern = re.compile("[0-9]{9}")
 zip_code_pattern = re.compile("[0-9]{5}")
+md5_pattern = re.compile("[0-9a-f]{32}")
+email_pattern = re.compile("[a-z0-9]@[a-z].[a-z]{1,3}")
 
 class OrderManager:
     """Class for providing the methods for managing the orders"""
@@ -171,3 +174,105 @@ class OrderManager:
 
         # Devolvemos el hash MD5
         return my_order.order_id
+    
+    def validate_md5(self, md5):
+        """
+        Lanza una excepción si el código md5 es inválido
+        """
+        if md5_pattern.fullmatch(md5) is None:
+            raise ValueError("Invalid MD5")
+
+    def validate_email(self, email):
+        """
+        Lanza una excepción si el email es inválido 
+        """
+        if email_pattern.fullmatch(email) is None:
+            raise ValueError("Invalid Email Format")
+
+    def send_product(self, input_file):
+
+        # Abrimos el fichero json de entrada (información del envío)
+        try:
+            with open(input_file, "r", encoding="UTF-8", newline="") as file:
+                input = json.load(file)
+        except FileNotFoundError as ex:
+            raise OrderManagementException("Wrong input file path")
+        except json.JSONDecodeError as ex:
+            raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
+
+        # Guardamos la información del envío
+        order_id = input["OrderID"]
+        email = input["ContactEmail"]
+
+        try:
+            self.validate_ean13(order_id)
+        except ValueError as vl:
+            raise OrderManagementException("Order ID should be a MD5") from vl
+
+        try:
+            self.validate_email(email)
+        except ValueError as vl:
+            raise OrderManagementException("Invalid Email Format") from vl
+
+        # Abrimos el fichero que guarda la información de los pedidos
+        try:
+            with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_order_request.json", "r", encoding="UTF-8", newline="") as file:
+                order_request_list = json.load(file)
+        except FileNotFoundError as ex:
+            raise OrderManagementException("Wrong order request file path")
+        except json.JSONDecodeError as ex:
+            raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
+
+        # Comprobamos que existen los datos del pedido que se quiere enviar en
+        # el almacén de pedidos
+        found = False
+        for i in order_request_list:
+            if i["_OrderRequest__order_id"] == order_id:
+                found = True
+                product_id = i["_OrderRequest__product_id"]
+                delivery_adress = i["_OrderRequest__delivery_address"]
+                order_type = i["_OrderRequest__order_type"]
+                phone_number = i["_OrderRequest__phone_number"]
+                zip_code = i["_OrderRequest__zip_code"]
+                time_stamp = i["_OrderRequest__time_stamp"]
+
+        if not found:
+            raise OrderManagementException("Order not Found")
+
+        # Para comprobar que el OrderID coincide con los datos del pedido
+        # (es decir, que no han sido manipulados). Generamos el MD5 que correspondería
+        # a esos datos y ese tiempo
+        time_freeze = datetime.fromtimestamp(time_stamp)
+        freeze = freezegun.freeze_time(time_freeze)
+        freeze.start()
+        # Volvemos a generar el objeto en el mismo tiempo que fue creado
+        order_check = OrderRequest(product_id, order_type, delivery_adress, phone_number, zip_code)
+        freeze.stop()
+        # Si el MD5 que acabamos de generar no coincide con el real, significa
+        # que los datos han sido modificados
+        if order_check.order_id != order_id:
+            raise OrderManagementException("Invalid or Corrupt MD5 Hash")
+
+        # Una vez comprobado, generamos un objeto de tipo OrderShipping, que nos generará
+        # un código de rastreo SHA-256 correspondiente al pedido
+        my_order = OrderShipping(product_id, order_id, email, order_type)
+
+        # Una vez generado my_order, generamos un fichero en el que se almacenarán todos los envíos
+        try:
+            with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_shipping_order.json", "r", encoding="UTF-8", newline="") as file:
+                data_list = json.load(file)
+        except FileNotFoundError as ex:
+            data_list = []
+        except json.JSONDecodeError as ex:
+            raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
+
+        data_list.append(my_order.__dict__)
+
+        try:
+            with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_shipping_order.json", "w", encoding="UTF-8", newline="") as file:
+                json.dump(data_list, file, indent=2)
+        except FileNotFoundError as ex:
+            raise OrderManagementException("Wrong file or file path") from ex
+
+        # Por último, devolvemos el código de rastreo
+        return my_order.tracking_code
