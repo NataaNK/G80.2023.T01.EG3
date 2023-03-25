@@ -11,6 +11,7 @@ from freezegun import freeze_time
 from uc3m_logistics import OrderManager
 from uc3m_logistics import OrderManagementException
 
+
 class TestOrderManager(TestCase):
 
     # TEST ALL CORRECT:
@@ -24,6 +25,8 @@ class TestOrderManager(TestCase):
         """
         Comprobación de MD5 válido
         """
+
+        # Vacío el store antes de empezar de nuevo los tests para que no se repitan
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
         file_store = JSON_FILES_PATH + "store_order_request.json"
         if os.path.isfile(file_store):
@@ -42,6 +45,7 @@ class TestOrderManager(TestCase):
         """
         Comprobación de fichero generado válido
         """
+
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
         file_store = JSON_FILES_PATH + "store_order_request.json"
 
@@ -183,7 +187,6 @@ class TestOrderManager(TestCase):
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
-        found = False
 
         # Comprobamos que los datos introducidos en el fichero son correctos
         found = False
@@ -219,7 +222,6 @@ class TestOrderManager(TestCase):
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
-        found = False
 
         # Comprobamos que los datos introducidos en el fichero son correctos
         found = False
@@ -257,7 +259,6 @@ class TestOrderManager(TestCase):
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
-        found = False
 
         # Comprobamos que los datos introducidos en el fichero son correctos
         found = False

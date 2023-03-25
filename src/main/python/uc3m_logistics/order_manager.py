@@ -18,11 +18,11 @@ from .order_shipping import OrderShipping
 
 
 # GLOBAL VARIABLES
-eanPattern = re.compile("[0-9]{13}")
-Phone_number_pattern = re.compile("[0-9]{9}")
-zip_code_pattern = re.compile("[0-9]{5}")
-md5_pattern = re.compile("[0-9a-f]{32}")
-email_pattern = re.compile("[a-z0-9]@[a-z].[a-z]{1,3}")
+eanPattern = re.compile("[0-9]{13}$")
+Phone_number_pattern = re.compile("[0-9]{9}$")
+zip_code_pattern = re.compile("[0-9]{5}$")
+md5_pattern = re.compile("[0-9a-f]{32}$")
+email_pattern = re.compile("[a-z0-9]+@[a-z]+.[a-z]{1,3}$")
 
 class OrderManager:
     """Class for providing the methods for managing the orders"""
@@ -176,7 +176,24 @@ class OrderManager:
 
         # Devolvemos el hash MD5
         return my_order.order_id
-    
+
+    def validate_content_json(self, load_json):
+        """
+        Recibe un json decodificado a diccionario y devuelve una excepción
+        si no tiene la cantidad de contenido necesario para el método
+        'send_product(). Es decir, si no contiene dos claves denominadas
+        'OrderID' y 'ContactEmail'
+        """
+        validate = True
+        OrderID = "OrderID"
+        ContactEmail = "ContactEmail"
+
+        if (OrderID not in load_json) or (ContactEmail not in load_json):
+            validate = False
+
+        if not validate:
+            raise ValueError("Wrong input file data: should have 'OrderID' and 'ContactEmail'")
+
     def validate_md5(self, md5):
         """
         Lanza una excepción si el código md5 es inválido
@@ -193,7 +210,7 @@ class OrderManager:
 
     def send_product(self, input_file):
 
-        # Abrimos el fichero json de entrada (información del envío)
+        # Abrimos el fichero json de entrada (información del envío) y lo decodificamos
         try:
             with open(input_file, "r", encoding="UTF-8", newline="") as file:
                 input = json.load(file)
@@ -202,12 +219,18 @@ class OrderManager:
         except json.JSONDecodeError as ex:
             raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
 
+        # Comprobamos que la entrada contiene los datos necesarios
+        try:
+            self.validate_content_json(input)
+        except ValueError as vl:
+            raise OrderManagementException("Wrong input file data: should have 'OrderID' and 'ContactEmail'")
+
         # Guardamos la información del envío
         order_id = input["OrderID"]
         email = input["ContactEmail"]
 
         try:
-            self.validate_ean13(order_id)
+            self.validate_md5(order_id)
         except ValueError as vl:
             raise OrderManagementException("Order ID should be a MD5") from vl
 
@@ -257,9 +280,9 @@ class OrderManager:
 
         # Una vez comprobado, generamos un objeto de tipo OrderShipping, que nos generará
         # un código de rastreo SHA-256 correspondiente al pedido
-        my_order = OrderShipping(product_id, order_id, email, order_type)
+        my_shipp = OrderShipping(product_id, order_id, email, order_type)
 
-        # Una vez generado my_order, generamos un fichero en el que se almacenarán todos los envíos
+        # Una vez generado my_shipp, generamos un fichero en el que se almacenarán todos los envíos
         try:
             with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_shipping_order.json", "r", encoding="UTF-8", newline="") as file:
                 data_list = json.load(file)
@@ -268,7 +291,7 @@ class OrderManager:
         except json.JSONDecodeError as ex:
             raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
 
-        data_list.append(my_order.__dict__)
+        data_list.append(my_shipp.__dict__)
 
         try:
             with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_shipping_order.json", "w", encoding="UTF-8", newline="") as file:
@@ -277,4 +300,4 @@ class OrderManager:
             raise OrderManagementException("Wrong file or file path") from ex
 
         # Por último, devolvemos el código de rastreo
-        return my_order.tracking_code
+        return my_shipp.tracking_code
