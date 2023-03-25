@@ -15,7 +15,7 @@ from uc3m_logistics import OrderManagementException
 JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
 file_store = JSON_FILES_PATH + "store_order_request.json"
 
-class TestOrderManager(TestCase):
+class TestRegisterOrder(TestCase):
 
     # TEST ALL CORRECT:
     # product_id correct and 13 digits
@@ -28,13 +28,6 @@ class TestOrderManager(TestCase):
         """
         Comprobación de MD5 válido
         """
-
-        # Vacío el store antes de empezar de nuevo los tests para que no se repitan
-        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
-        file_store = JSON_FILES_PATH + "store_order_request.json"
-        if os.path.isfile(file_store):
-            os.remove(file_store)
-
         data = ["8435464158875", "premium", "Avenidas Contrarrevolucionarias",
                 "123456789", "28345"]
 

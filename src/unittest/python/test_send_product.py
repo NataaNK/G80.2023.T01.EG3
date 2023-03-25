@@ -19,12 +19,6 @@ class TestSendProduct(TestCase):
     @freeze_time("2023-03-09")
     def test_send_product_valid_1(self):
 
-        # Vacío el store antes de empezar de nuevo los tests para que no se repita
-        JSON_STORE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
-        file_store = JSON_STORE_PATH + "store_shipping_order.json"
-        if os.path.isfile(file_store):
-            os.remove(file_store)
-
         input_file = JSON_TEST_PATH + "mytest1.json"
 
         my_order = OrderManager()
