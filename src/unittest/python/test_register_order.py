@@ -11,6 +11,9 @@ from freezegun import freeze_time
 from uc3m_logistics import OrderManager
 from uc3m_logistics import OrderManagementException
 
+# Global Variables
+JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
+file_store = JSON_FILES_PATH + "store_order_request.json"
 
 class TestOrderManager(TestCase):
 
@@ -46,8 +49,6 @@ class TestOrderManager(TestCase):
         Comprobación de fichero generado válido
         """
 
-        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
-        file_store = JSON_FILES_PATH + "store_order_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
@@ -132,10 +133,6 @@ class TestOrderManager(TestCase):
 
         self.assertEqual("4565371337e0ce39202cbdcba5ba7100", my_value)
 
-
-        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
-        file_store = JSON_FILES_PATH + "store_order_request.json"
-
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
 
@@ -181,10 +178,6 @@ class TestOrderManager(TestCase):
 
         self.assertEqual("bc468149c36d67d3e9a7e9fabf297f1a", my_value)
 
-
-        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
-        file_store = JSON_FILES_PATH + "store_order_request.json"
-
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
 
@@ -215,10 +208,6 @@ class TestOrderManager(TestCase):
                                            zip_code=data[4])
 
         self.assertEqual("09e5d8f8ce7ca08b8aaf2aee97c0b6b5", my_value)
-
-
-        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
-        file_store = JSON_FILES_PATH + "store_order_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
@@ -253,10 +242,6 @@ class TestOrderManager(TestCase):
 
         self.assertEqual("bbd5da1ff08e8c4239fd942fc9a0cdc7", my_value)
 
-
-        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
-        file_store = JSON_FILES_PATH + "store_order_request.json"
-
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
 
@@ -289,10 +274,6 @@ class TestOrderManager(TestCase):
                                            zip_code=data[4])
 
         self.assertEqual("54f0c7650120aa61b3fcf1cb67302ffa", my_value)
-
-
-        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
-        file_store = JSON_FILES_PATH + "store_order_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
@@ -402,9 +383,6 @@ class TestOrderManager(TestCase):
 
         self.assertEqual("fb6f363e6bc78ebdad9e54ee6a3bde87", my_value)
 
-        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
-        file_store = JSON_FILES_PATH + "store_order_request.json"
-
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
 
@@ -435,9 +413,6 @@ class TestOrderManager(TestCase):
                                            zip_code=data[4])
 
         self.assertEqual("303387598741da38c341cc23e1305712", my_value)
-
-        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
-        file_store = JSON_FILES_PATH + "store_order_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
@@ -470,9 +445,6 @@ class TestOrderManager(TestCase):
 
         self.assertEqual("706c656dcbbad90fd668517cb17246d6", my_value)
 
-        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
-        file_store = JSON_FILES_PATH + "store_order_request.json"
-
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
 
@@ -503,9 +475,6 @@ class TestOrderManager(TestCase):
                                            zip_code=data[4])
 
         self.assertEqual("c86db80eea5602f18c378c72a7b81de9", my_value)
-
-        JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
-        file_store = JSON_FILES_PATH + "store_order_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)

@@ -11,6 +11,7 @@ import json
 from pathlib import Path
 import os
 import freezegun
+import datetime
 from datetime import datetime
 from .order_management_exception import OrderManagementException
 from .order_request import OrderRequest
@@ -22,7 +23,7 @@ eanPattern = re.compile("[0-9]{13}$")
 Phone_number_pattern = re.compile("[0-9]{9}$")
 zip_code_pattern = re.compile("[0-9]{5}$")
 md5_pattern = re.compile("[0-9a-f]{32}$")
-email_pattern = re.compile("[a-z0-9]+@[a-z]+.[a-z]{1,3}$")
+email_pattern = re.compile("[a-z0-9]+@[a-z]+\.[a-z]{1,3}$")
 
 class OrderManager:
     """Class for providing the methods for managing the orders"""
@@ -166,7 +167,9 @@ class OrderManager:
         except json.JSONDecodeError as ex:
             raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
 
-        data_list.append(my_order.__dict__)
+        # No meteremos información repetida
+        if my_order.__dict__ not in data_list:
+            data_list.append(my_order.__dict__)
 
         try:
             with open(file_store, "w", encoding="UTF-8", newline="") as file:
@@ -291,7 +294,9 @@ class OrderManager:
         except json.JSONDecodeError as ex:
             raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
 
-        data_list.append(my_shipp.__dict__)
+        # No meteremos información repretida
+        if my_shipp.__dict__ not in data_list:
+            data_list.append(my_shipp.__dict__)
 
         try:
             with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_shipping_order.json", "w", encoding="UTF-8", newline="") as file:
@@ -301,3 +306,84 @@ class OrderManager:
 
         # Por último, devolvemos el código de rastreo
         return my_shipp.tracking_code
+
+    def validate_sha256(self, sha):
+        """
+        Lanza una excepción si el código de registro SHA256 es inválido
+        """
+        pass
+
+    def deliver_product(self, tracking_number) -> bool:
+
+        try:
+            self.validate_sha256(tracking_number)
+        except ValueError as vl:
+            raise OrderManagementException("Tracking Code should be a SHA256") from vl
+
+        try:
+            with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_shipping_order.json", "r", encoding="UTF-8", newline="") as file:
+                shippings = json.load(file)
+        except FileNotFoundError as ex:
+            raise OrderManagementException("Wrong input file path")
+        except json.JSONDecodeError as ex:
+            raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
+
+        found = False
+        for shipp in shippings:
+            if shipp["_OrderShipping__tracking_code"] == tracking_number:
+                found = True
+                product_id = shipp["_OrderShipping__product_id"]
+                order_id = shipp["_OrderShipping__order_id"]
+                delivery_email = shipp["_OrderShipping__delivery_email"]
+                issued_at = shipp["_OrderShipping__issued_at"]
+                delivery_day = shipp["_OrderShipping__delivery_day"]
+
+        if not found:
+            raise OrderManagementException("Shipping Order not Found")
+
+        # Para volver a obtener el SHA256, hay que determinar cuál fue el tipo de envío escogido
+        delivery_time = delivery_day - issued_at
+        if delivery_time <= 86400: # Esta parte hay que mirarla más en detalle
+            order_type = "premium"
+        else:
+            order_type = "regular"
+
+        time_freeze = datetime.fromtimestamp(issued_at)
+        freeze = freezegun.freeze_time(time_freeze)
+        freeze.start()
+        # Volvemos a generar el objeto en el mismo tiempo que fue creado
+        order_check = OrderShipping(product_id, order_id, delivery_email, order_type)
+        freeze.stop()
+        # Si el SHA256 que acabamos de generar no coincide con el real, significa
+        # que los datos han sido modificados
+
+        if order_check.tracking_code != tracking_number:
+            raise OrderManagementException("Invalid or Corrupt SHA256 Code")
+
+        # Comprobarmos que la fecha de entrega anterior a la fecha de hoy
+        hoy = datetime.timestamp(datetime.utcnow())
+        if delivery_day < hoy: #ESTO HAY QUE VERLO CON MÁS DETALLE
+            raise OrderManagementException("Invalid Delivery Day")
+
+        # Generamos el fichero donde se registrarán todas las entregas
+        try:
+            with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_deliveries.json", "r", encoding="UTF-8", newline="") as file:
+                delivery_data = json.load(file)
+        except FileNotFoundError as ex:
+            delivery_data = []
+        except json.JSONDecodeError as ex:
+            raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
+
+        delivery_data_dicc = {"Delivery Day": hoy,
+                         "Tracking Code": tracking_number}
+
+        if delivery_data_dicc not in delivery_data:
+            delivery_data.append(delivery_data_dicc)
+
+        try:
+            with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_deliveries.json", "w", encoding="UTF-8", newline="") as file:
+                json.dump(delivery_data, file, indent=2)
+        except FileNotFoundError as ex:
+            raise OrderManagementException("Wrong file or file path") from ex
+
+        return True
