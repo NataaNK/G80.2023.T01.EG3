@@ -1,10 +1,12 @@
+"""MODULE: order_delivery. Contains the delivery order class"""
 import json
 from datetime import datetime
 
 class OrderDelivery():
     """Class representing the information of a delivered product"""
     def __init__(self, tracking_code, date = datetime.timestamp(datetime.utcnow())):
-        self.__delivery_day = date # Si no se especifica ninguna fecha, por defecto se introduce la fecha actual
+        # Si no se especifica ninguna fecha, por defecto se introduce la fecha actual
+        self.__delivery_day = date
         self.__tracking_code = tracking_code
 
     def __str__(self):
@@ -12,8 +14,14 @@ class OrderDelivery():
 
     @property
     def delivery_day(self):
+        """
+        Atribute representing the delivery day of the product
+        """
         return self.__delivery_day
 
     @property
     def tracking_code(self):
-        return self.tracking_code
+        """
+        Atribute representing the delivery day of the product
+        """
+        return self.__tracking_code
