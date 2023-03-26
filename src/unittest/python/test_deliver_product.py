@@ -4,6 +4,7 @@ test_deliver_product.py: Clase para testear el método deliver_product()
 de OrderManager"""
 
 from unittest import TestCase
+import shutil
 import json
 import os
 from pathlib import Path

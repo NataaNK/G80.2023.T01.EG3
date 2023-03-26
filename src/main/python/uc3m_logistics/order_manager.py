@@ -333,7 +333,7 @@ class OrderManager:
             with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_shipping_order.json", "r", encoding="UTF-8", newline="") as file:
                 shippings = json.load(file)
         except FileNotFoundError as ex:
-            raise OrderManagementException("Wrong input file path")
+            raise OrderManagementException("Wrong store shipping file path")
         except json.JSONDecodeError as ex:
             raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
 
@@ -360,7 +360,7 @@ class OrderManager:
         # Para volver a obtener el SHA-256, hay que determinar cuál fue el tipo
         # de envío escogido
         delivery_time = delivery_day - issued_at
-        if delivery_time <= (24*60*60):
+        if delivery_time == (24*60*60):
             order_type = "premium"
             # Para comprobar que la fecha de envío es la correcta
             # volvemos a calcularla según el tipo de pedido
@@ -406,10 +406,8 @@ class OrderManager:
         if my_delivery.__dict__ not in delivery_data:
             delivery_data.append(my_delivery.__dict__)
 
-        try:
-            with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_deliveries.json", "w", encoding="UTF-8", newline="") as file:
+        with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_deliveries.json", "w", encoding="UTF-8", newline="") as file:
                 json.dump(delivery_data, file, indent=2)
-        except FileNotFoundError as ex:
-            raise OrderManagementException("Wrong file or file path") from ex
+
 
         return True
