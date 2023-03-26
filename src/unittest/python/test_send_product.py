@@ -1,3 +1,8 @@
+"""Autores: Natalia Rodríguez Navarro, Alberto Penas Díaz
+
+test_send_product.py: Clase para testear el método send_product()
+de OrderManager"""
+
 from unittest import TestCase
 import json
 import os
@@ -952,7 +957,7 @@ class TestSendProduct(TestCase):
         my_order.register_order("8435464158875", "regular", "Calle Colmenarejo, 5", "123456789",
                                 "28345")
 
-        self.assertEqual("ffcf3ad64632830d91bcd226a7eef68e1bc2e78204a8d129d17548b277405af1",
+        self.assertEqual("ebf15a34d6451a7314a74ac395bfcc3d00e5e34a0fafe51fe9e1d0680928294d",
                          my_order.send_product(input_file))
 
     # MODIFICACIÓN DEL NODO 51 (Dominio de 4 letras)

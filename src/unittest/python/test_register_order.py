@@ -1,7 +1,7 @@
 """Autores: Natalia Rodríguez Navarro, Alberto Penas Díaz
 
-test_register_order.py: Clase para testear el método
-register_order()"""
+test_register_order.py: Clase para testear el método register_order()
+de OrderManager"""
 
 from unittest import TestCase
 import json

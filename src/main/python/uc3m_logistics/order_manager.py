@@ -23,7 +23,7 @@ from .order_delivery import OrderDelivery
 eanPattern = re.compile("[0-9]{13}$")
 Phone_number_pattern = re.compile("[0-9]{9}$")
 zip_code_pattern = re.compile("[0-9]{5}$")
-md5_pattern = re.compile("[0-9a-f]{32}$")
+md5_pattern = re.compile("[0-9A-Fa-f]{32}$")
 email_pattern = re.compile("[a-z0-9]+@[a-z]+\.[a-z]{1,3}$")
 sha256_pattern = re.compile("[a-fA-F0-9]{64}$")
 
@@ -70,9 +70,10 @@ class OrderManager:
 
     def validate_order_type(self, order_type):
         """
-        Lanza una excepción si el tipo de envío es incorrecto
+        Lanza una excepción si el tipo de envío es incorrecto.
+        No importa si introducen el tipo en mayúsculas o mínusculas.
         """
-        if order_type != "premium" and order_type != "regular":
+        if order_type.upper() != "PREMIUM" and order_type.upper() != "REGULAR":
             raise ValueError("Invalid Order Type")
 
     def validate_deivery_address(self, delivery):
@@ -314,15 +315,17 @@ class OrderManager:
         Lanza una excepción si el código de registro SHA256 es inválido
         """
         if sha256_pattern.fullmatch(sha) is None:
-            raise ValueError("Invalid SHA256 Format")
+            raise ValueError("Invalid SHA-256 Format")
 
     def deliver_product(self, tracking_number) -> bool:
 
+        # Comprobamos que el SHA-256 es válido
         try:
             self.validate_sha256(tracking_number)
         except ValueError as vl:
             raise OrderManagementException("Tracking Code should be a SHA256") from vl
 
+        # Abrimos el almacén con la información de los envíos
         try:
             with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_shipping_order.json", "r", encoding="UTF-8", newline="") as file:
                 shippings = json.load(file)
@@ -331,6 +334,7 @@ class OrderManager:
         except json.JSONDecodeError as ex:
             raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
 
+        # Buscamos en el almacén si existe información sobre el envío
         found = False
         for shipp in shippings:
             if shipp["_OrderShipping__tracking_code"] == tracking_number:
@@ -344,29 +348,42 @@ class OrderManager:
         if not found:
             raise OrderManagementException("Shipping Order not Found")
 
-        # Para volver a obtener el SHA256, hay que determinar cuál fue el tipo de envío escogido
+        # Hay que volver a obtener el código de rastreo para comprobar que los
+        # datos no han sido manipulados.
+        # Para volver a obtener el SHA-256, hay que determinar cuál fue el tipo
+        # de envío escogido
         delivery_time = delivery_day - issued_at
-        if delivery_time <= 86400: # Esta parte hay que mirarla más en detalle
+        if delivery_time <= (24*60*60):
             order_type = "premium"
+            # Para comprobar que la fecha de envío es la correcta
+            # volvemos a calcularla según el tipo de pedido
+            my_delivery_day = issued_at + (24*60*60)
         else:
             order_type = "regular"
+            my_delivery_day = issued_at + (7*24*60*60)
 
+        # Compruebo si la fecha de entrega es igual a la registrada
+        hoy = datetime.timestamp(datetime.utcnow())
+        if delivery_day != my_delivery_day:
+            raise OrderManagementException("Invalid Delivery Day")
+        # Además, una vez entregado el pedido no es posible que la fecha de entrega
+        # sea superior al día de hoy, por lo que tampoco será válida
+        elif delivery_day < hoy:
+            raise OrderManagementException("Invalid Delivery Day")
+
+        # Una vez comprobada la fecha, generamos de nuevo el SHA-256
         time_freeze = datetime.fromtimestamp(issued_at)
         freeze = freezegun.freeze_time(time_freeze)
         freeze.start()
         # Volvemos a generar el objeto en el mismo tiempo que fue creado
         order_check = OrderShipping(product_id, order_id, delivery_email, order_type)
         freeze.stop()
+
         # Si el SHA256 que acabamos de generar no coincide con el real, significa
         # que los datos han sido modificados
-
         if order_check.tracking_code != tracking_number:
-            raise OrderManagementException("Invalid or Corrupt SHA256 Code")
+            raise OrderManagementException("Invalid or Corrupt SHA-256 Code")
 
-        # Comprobarmos que la fecha de entrega anterior a la fecha de hoy
-        hoy = datetime.timestamp(datetime.utcnow())
-        if delivery_day < hoy: #ESTO HAY QUE VERLO CON MÁS DETALLE
-            raise OrderManagementException("Invalid Delivery Day")
 
         # Generamos el fichero donde se registrarán todas las entregas
         try:
@@ -377,7 +394,7 @@ class OrderManager:
         except json.JSONDecodeError as ex:
             raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
 
-        my_delivery = OrderDelivery(tracking_number, hoy)
+        my_delivery = OrderDelivery(tracking_number, delivery_day)
 
         if my_delivery.__dict__ not in delivery_data:
             delivery_data.append(my_delivery.__dict__)
