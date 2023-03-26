@@ -22,8 +22,8 @@ class TestSendProduct(TestCase):
         input_file = JSON_TEST_PATH + "mytest1.json"
 
         my_order = OrderManager()
-        my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
-                                ORDER_DATA[4])
+        my_order.register_order("8435464158875", "premium", "Avenidas Contrarrevolucionarias",
+                                "123456789", "28345")
 
         self.assertEqual("c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c",
                          my_order.send_product(input_file))
@@ -672,10 +672,10 @@ class TestSendProduct(TestCase):
         input_file = JSON_TEST_PATH + "mytest44.json"
 
         my_order = OrderManager()
-        my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
-                                ORDER_DATA[4])
+        my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5", "123456789",
+                                "52345")
 
-        self.assertEqual("c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c",
+        self.assertEqual("4bab3094ecf6f34afe70c175a3e2ffafc407a59056eb5cccb4232158deb64dae",
                          my_order.send_product(input_file))
 
     # ELIMINACIÓN DEL NODO 41 (Sin nombre del email):
@@ -730,10 +730,10 @@ class TestSendProduct(TestCase):
         input_file = JSON_TEST_PATH + "mytest48.json"
 
         my_order = OrderManager()
-        my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
-                                ORDER_DATA[4])
+        my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5", "123456789",
+                                "01345")
 
-        self.assertEqual("c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c",
+        self.assertEqual("59adf8977b25f2ba3d4e989c51ac1f6dfce29544fe01bc84770f9afad42290ee",
                          my_order.send_product(input_file))
 
     # ELIMINACIÓN DEL NODO 43 (Sin dominio en el email):
@@ -936,10 +936,10 @@ class TestSendProduct(TestCase):
         input_file = JSON_TEST_PATH + "mytest62.json"
 
         my_order = OrderManager()
-        my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
-                                ORDER_DATA[4])
+        my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5", "123456789",
+                                "02345")
 
-        self.assertEqual("c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c",
+        self.assertEqual("a8394d99a4f50ee468829ff687273a45e2c853824084836fd73279e5a02b9c61",
                          my_order.send_product(input_file))
 
     # MODIFICACIÓN DEL NODO 51 (Dominio de 2 letras)
@@ -949,10 +949,10 @@ class TestSendProduct(TestCase):
         input_file = JSON_TEST_PATH + "mytest63.json"
 
         my_order = OrderManager()
-        my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
-                                ORDER_DATA[4])
+        my_order.register_order("8435464158875", "regular", "Calle Colmenarejo, 5", "123456789",
+                                "28345")
 
-        self.assertEqual("c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c",
+        self.assertEqual("ffcf3ad64632830d91bcd226a7eef68e1bc2e78204a8d129d17548b277405af1",
                          my_order.send_product(input_file))
 
     # MODIFICACIÓN DEL NODO 51 (Dominio de 4 letras)
