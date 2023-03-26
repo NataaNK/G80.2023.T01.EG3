@@ -257,8 +257,10 @@ class OrderManager:
         # Comprobamos que existen los datos del pedido que se quiere enviar en
         # el almacén de pedidos. Una vez, encontrado ya no seguimos buscando
         found = False
-        for i in order_request_list:
-            if i["_OrderRequest__order_id"] == order_id:
+        i = 0
+        while not found and i < len(order_request_list):
+            request = order_request_list[i]
+            if request["_OrderRequest__order_id"] == order_id:
                 found = True
                 product_id = request["_OrderRequest__product_id"]
                 delivery_adress = request["_OrderRequest__delivery_address"]
@@ -338,7 +340,9 @@ class OrderManager:
         # Buscamos en el almacén si existe información sobre el envío
         # Una vez encontrado, no seguimos buscando
         found = False
-        for shipp in shippings:
+        i = 0
+        while not found and i < len(shippings):
+            shipp = shippings[i]
             if shipp["_OrderShipping__tracking_code"] == tracking_number:
                 found = True
                 product_id = shipp["_OrderShipping__product_id"]
@@ -346,6 +350,7 @@ class OrderManager:
                 delivery_email = shipp["_OrderShipping__delivery_email"]
                 issued_at = shipp["_OrderShipping__issued_at"]
                 delivery_day = shipp["_OrderShipping__delivery_day"]
+            i += 1
 
         if not found:
             raise OrderManagementException("Shipping Order not Found")
