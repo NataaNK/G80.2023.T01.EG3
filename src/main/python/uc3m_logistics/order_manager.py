@@ -375,11 +375,11 @@ class OrderManager:
             raise OrderManagementException("Invalid Delivery Day")
         # Además, una vez entregado el pedido no es posible que la fecha de entrega
         # sea superior al día de hoy, por lo que tampoco será válida
-        elif delivery_day < hoy:
+        elif delivery_day > hoy:
             raise OrderManagementException("Invalid Delivery Day")
 
         # Una vez comprobada la fecha, generamos de nuevo el SHA-256
-        time_freeze = datetime.fromtimestamp(issued_at)
+        time_freeze = datetime.fromtimestamp(issued_at - 3600)
         freeze = freezegun.freeze_time(time_freeze)
         freeze.start()
         # Volvemos a generar el objeto en el mismo tiempo que fue creado
