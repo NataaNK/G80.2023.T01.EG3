@@ -16,6 +16,7 @@ from datetime import datetime
 from .order_management_exception import OrderManagementException
 from .order_request import OrderRequest
 from .order_shipping import OrderShipping
+from .order_delivery import OrderDelivery
 
 
 # GLOBAL VARIABLES
@@ -374,11 +375,10 @@ class OrderManager:
         except json.JSONDecodeError as ex:
             raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
 
-        delivery_data_dicc = {"Delivery Day": hoy,
-                         "Tracking Code": tracking_number}
+        my_delivery = OrderDelivery(tracking_number, hoy)
 
-        if delivery_data_dicc not in delivery_data:
-            delivery_data.append(delivery_data_dicc)
+        if my_delivery.__dict__ not in delivery_data:
+            delivery_data.append(my_delivery.__dict__)
 
         try:
             with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_deliveries.json", "w", encoding="UTF-8", newline="") as file:
