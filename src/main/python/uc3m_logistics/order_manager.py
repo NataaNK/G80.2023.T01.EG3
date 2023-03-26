@@ -25,6 +25,7 @@ Phone_number_pattern = re.compile("[0-9]{9}$")
 zip_code_pattern = re.compile("[0-9]{5}$")
 md5_pattern = re.compile("[0-9a-f]{32}$")
 email_pattern = re.compile("[a-z0-9]+@[a-z]+\.[a-z]{1,3}$")
+sha256_pattern = re.compile("[a-fA-F0-9]{64}$")
 
 class OrderManager:
     """Class for providing the methods for managing the orders"""
@@ -312,7 +313,8 @@ class OrderManager:
         """
         Lanza una excepción si el código de registro SHA256 es inválido
         """
-        pass
+        if sha256_pattern.fullmatch(sha) is None:
+            raise ValueError("Invalid SHA256 Format")
 
     def deliver_product(self, tracking_number) -> bool:
 
