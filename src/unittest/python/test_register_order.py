@@ -47,6 +47,7 @@ class TestRegisterOrder(TestCase):
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
+        # Una vez encontrado, no seguimos buscando
         found = False
         for item in data_list:
             if (item["_OrderRequest__product_id"] == data[0]
@@ -130,8 +131,11 @@ class TestRegisterOrder(TestCase):
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
+        # Una vez encontrado, no seguimos buscando
         found = False
-        for item in data_list:
+        i = 0
+        while not found and i < len(data_list):
+            item = data_list[i]
             if (item["_OrderRequest__product_id"] == data[0]
                     and item["_OrderRequest__delivery_address"] == data[2]
                     and item["_OrderRequest__order_type"] == data[1]
@@ -140,6 +144,7 @@ class TestRegisterOrder(TestCase):
                     and item["_OrderRequest__time_stamp"] == 1678320000.0
                     and item["_OrderRequest__order_id"] == my_value):
                 found = True
+            i += 1
 
         self.assertTrue(found)
 
@@ -175,8 +180,11 @@ class TestRegisterOrder(TestCase):
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
+        # Una vez encontrado, no seguimos buscando
         found = False
-        for item in data_list:
+        i = 0
+        while not found and i < len(data_list):
+            item = data_list[i]
             if (item["_OrderRequest__product_id"] == data[0]
                     and item["_OrderRequest__delivery_address"] == data[2]
                     and item["_OrderRequest__order_type"] == data[1]
@@ -185,6 +193,7 @@ class TestRegisterOrder(TestCase):
                     and item["_OrderRequest__time_stamp"] == 1678320000.0
                     and item["_OrderRequest__order_id"] == my_value):
                 found = True
+            i += 1
 
         self.assertTrue(found)
 
@@ -206,8 +215,11 @@ class TestRegisterOrder(TestCase):
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
+        # Una vez encontrado, no seguimos buscando
         found = False
-        for item in data_list:
+        i = 0
+        while not found and i < len(data_list):
+            item = data_list[i]
             if (item["_OrderRequest__product_id"] == data[0]
                     and item["_OrderRequest__delivery_address"] == data[2]
                     and item["_OrderRequest__order_type"] == data[1]
@@ -216,6 +228,7 @@ class TestRegisterOrder(TestCase):
                     and item["_OrderRequest__time_stamp"] == 1678320000.0
                     and item["_OrderRequest__order_id"] == my_value):
                 found = True
+            i += 1
 
         self.assertTrue(found)
 
@@ -239,8 +252,11 @@ class TestRegisterOrder(TestCase):
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
+        # Una vez encontrado, no seguimos buscando
         found = False
-        for item in data_list:
+        i = 0
+        while not found and i < len(data_list):
+            item = data_list[i]
             if (item["_OrderRequest__product_id"] == data[0]
                     and item["_OrderRequest__delivery_address"] == data[2]
                     and item["_OrderRequest__order_type"] == data[1]
@@ -249,6 +265,7 @@ class TestRegisterOrder(TestCase):
                     and item["_OrderRequest__time_stamp"] == 1678320000.0
                     and item["_OrderRequest__order_id"] == my_value):
                 found = True
+            i += 1
 
         self.assertTrue(found)
 
@@ -272,8 +289,11 @@ class TestRegisterOrder(TestCase):
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
+        # Una vez encontrado, no seguimos buscando
         found = False
-        for item in data_list:
+        i = 0
+        while not found and i < len(data_list):
+            item = data_list[i]
             if (item["_OrderRequest__product_id"] == data[0]
                     and item["_OrderRequest__delivery_address"] == data[2]
                     and item["_OrderRequest__order_type"] == data[1]
@@ -282,6 +302,7 @@ class TestRegisterOrder(TestCase):
                     and item["_OrderRequest__time_stamp"] == 1678320000.0
                     and item["_OrderRequest__order_id"] == my_value):
                 found = True
+            i += 1
 
         self.assertTrue(found)
 
@@ -380,8 +401,11 @@ class TestRegisterOrder(TestCase):
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
+        # Una vez encontrado, no seguimos buscando
         found = False
-        for item in data_list:
+        i = 0
+        while not found and i < len(data_list):
+            item = data_list[i]
             if (item["_OrderRequest__product_id"] == data[0]
                     and item["_OrderRequest__delivery_address"] == data[2]
                     and item["_OrderRequest__order_type"] == data[1]
@@ -390,6 +414,7 @@ class TestRegisterOrder(TestCase):
                     and item["_OrderRequest__time_stamp"] == 1678320000.0
                     and item["_OrderRequest__order_id"] == my_value):
                 found = True
+            i += 1
 
         self.assertTrue(found)
 
@@ -411,8 +436,11 @@ class TestRegisterOrder(TestCase):
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
+        # Una vez encontrado, no seguimos buscando
         found = False
-        for item in data_list:
+        i = 0
+        while not found and i < len(data_list):
+            item = data_list[i]
             if (item["_OrderRequest__product_id"] == data[0]
                     and item["_OrderRequest__delivery_address"] == data[2]
                     and item["_OrderRequest__order_type"] == data[1]
@@ -421,6 +449,7 @@ class TestRegisterOrder(TestCase):
                     and item["_OrderRequest__time_stamp"] == 1678320000.0
                     and item["_OrderRequest__order_id"] == my_value):
                 found = True
+            i += 1
 
         self.assertTrue(found)
 
@@ -442,8 +471,11 @@ class TestRegisterOrder(TestCase):
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
+        # Una vez encontrado, no seguimos buscando
         found = False
-        for item in data_list:
+        i = 0
+        while not found and i < len(data_list):
+            item = data_list[i]
             if (item["_OrderRequest__product_id"] == data[0]
                     and item["_OrderRequest__delivery_address"] == data[2]
                     and item["_OrderRequest__order_type"] == data[1]
@@ -452,6 +484,7 @@ class TestRegisterOrder(TestCase):
                     and item["_OrderRequest__time_stamp"] == 1678320000.0
                     and item["_OrderRequest__order_id"] == my_value):
                 found = True
+            i += 1
 
         self.assertTrue(found)
 
@@ -473,8 +506,11 @@ class TestRegisterOrder(TestCase):
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
+        # Una vez encontrado, no seguimos buscando
         found = False
-        for item in data_list:
+        i = 0
+        while not found and i < len(data_list):
+            item = data_list[i]
             if (item["_OrderRequest__product_id"] == data[0]
                     and item["_OrderRequest__delivery_address"] == data[2]
                     and item["_OrderRequest__order_type"] == data[1]
@@ -483,6 +519,7 @@ class TestRegisterOrder(TestCase):
                     and item["_OrderRequest__time_stamp"] == 1678320000.0
                     and item["_OrderRequest__order_id"] == my_value):
                 found = True
+            i += 1
 
         self.assertTrue(found)
 

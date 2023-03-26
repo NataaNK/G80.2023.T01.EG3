@@ -255,17 +255,18 @@ class OrderManager:
             raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
 
         # Comprobamos que existen los datos del pedido que se quiere enviar en
-        # el almacén de pedidos
+        # el almacén de pedidos. Una vez, encontrado ya no seguimos buscando
         found = False
         for i in order_request_list:
             if i["_OrderRequest__order_id"] == order_id:
                 found = True
-                product_id = i["_OrderRequest__product_id"]
-                delivery_adress = i["_OrderRequest__delivery_address"]
-                order_type = i["_OrderRequest__order_type"]
-                phone_number = i["_OrderRequest__phone_number"]
-                zip_code = i["_OrderRequest__zip_code"]
-                time_stamp = i["_OrderRequest__time_stamp"]
+                product_id = request["_OrderRequest__product_id"]
+                delivery_adress = request["_OrderRequest__delivery_address"]
+                order_type = request["_OrderRequest__order_type"]
+                phone_number = request["_OrderRequest__phone_number"]
+                zip_code = request["_OrderRequest__zip_code"]
+                time_stamp = request["_OrderRequest__time_stamp"]
+            i += 1
 
         if not found:
             raise OrderManagementException("Order not Found")
@@ -335,6 +336,7 @@ class OrderManager:
             raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
 
         # Buscamos en el almacén si existe información sobre el envío
+        # Una vez encontrado, no seguimos buscando
         found = False
         for shipp in shippings:
             if shipp["_OrderShipping__tracking_code"] == tracking_number:
