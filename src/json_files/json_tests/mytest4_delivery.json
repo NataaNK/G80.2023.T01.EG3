@@ -1,0 +1,12 @@
+[
+  {
+    "_OrderShipping__alg": "SHA-256",
+    "_OrderShipping__type": "UC3M",
+    "_OrderShipping__product_id": "8435464158875",
+    "_OrderShipping__order_id": "03de4c31222c38cbce5957655a0b5f28",
+    "_OrderShipping__delivery_email": "emaildeprueba@gmail.com",
+    "_OrderShipping__issued_at": 1678320000.0,
+    "_OrderShipping__delivery_day": 1678406400.0,
+    "_OrderShipping__tracking_code": "c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c"
+  }
+]
