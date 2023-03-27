@@ -5,7 +5,6 @@ de OrderManager"""
 
 from unittest import TestCase
 import json
-import os
 from pathlib import Path
 from freezegun import freeze_time
 from uc3m_logistics import OrderManager
@@ -13,21 +12,27 @@ from uc3m_logistics import OrderManagementException
 
 # Global Variables
 JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
-file_store = JSON_FILES_PATH + "store_order_request.json"
+FILE_STORE = JSON_FILES_PATH + "store_order_request.json"
 
 class TestRegisterOrder(TestCase):
+    """
+    Clase para testear el método register_order()
+    de OrderManager
+    """
 
-    # TEST ALL CORRECT:
-    # product_id correct and 13 digits
-    # order_type = "premium"
-    # delivery_adress only one blank space
-    # zip_code length = 5
+    # TEST ALL CORRECT
 
     @freeze_time("2023-03-09")
     def test_register_order_ok_1(self):
         """
-        Comprobación de MD5 válido
+        product_id correct and 13 digits
+        order_type = "premium"
+        delivery_adress only one blank space
+        zip_code length = 5
         """
+
+        # Comprobación de MD5 válido
+
         data = ["8435464158875", "premium", "Avenidas Contrarrevolucionarias",
                 "123456789", "28345"]
 
@@ -38,12 +43,10 @@ class TestRegisterOrder(TestCase):
 
         self.assertEqual("03de4c31222c38cbce5957655a0b5f28", my_value)
 
-        """
-        Comprobación de fichero generado válido
-        """
 
+        # Comprobación de fichero generado válido
 
-        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+        with (open(FILE_STORE, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
@@ -72,11 +75,11 @@ class TestRegisterOrder(TestCase):
         """
         my_order = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_value = my_order.register_order("84354641588Aa", "premium", "Calle Colmenarejo, 5",
-                                           "123456789", "28345")
+        with self.assertRaises(OrderManagementException) as order_excep:
+            my_order.register_order("84354641588Aa", "premium", "Calle Colmenarejo, 5",
+                                    "123456789", "28345")
 
-        self.assertEqual("Product ID should be an EAN13", cm.exception.message)
+        self.assertEqual("Product ID should be an EAN13", order_excep.exception.message)
 
     def test_register_order_nok_2(self):
         """
@@ -84,11 +87,11 @@ class TestRegisterOrder(TestCase):
         """
         my_order = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_value = my_order.register_order("8435464158870", "premium", "Calle Colmenarejo, 5",
-                                           "123456789", "28345")
+        with self.assertRaises(OrderManagementException) as order_excep:
+            my_order.register_order("8435464158870", "premium", "Calle Colmenarejo, 5",
+                                    "123456789", "28345")
 
-        self.assertEqual("Product ID should be an EAN13", cm.exception.message)
+        self.assertEqual("Product ID should be an EAN13", order_excep.exception.message)
 
     def test_register_order_nok_3(self):
         """
@@ -96,11 +99,11 @@ class TestRegisterOrder(TestCase):
         """
         my_order = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_value = my_order.register_order("843546415887", "premium", "Calle Colmenarejo, 5o",
-                                           "123456789", "28345")
+        with self.assertRaises(OrderManagementException) as order_excep:
+            my_order.register_order("843546415887", "premium", "Calle Colmenarejo, 5o",
+                                    "123456789", "28345")
 
-        self.assertEqual("Product ID should be an EAN13", cm.exception.message)
+        self.assertEqual("Product ID should be an EAN13", order_excep.exception.message)
 
     def test_register_order_nok_4(self):
         """
@@ -108,11 +111,11 @@ class TestRegisterOrder(TestCase):
         """
         my_order = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_value = my_order.register_order("8435464158879", "premium", "Calle Colmenarejo, 5",
-                                           "123456789", "28345")
+        with self.assertRaises(OrderManagementException) as order_excep:
+            my_order.register_order("8435464158879", "premium", "Calle Colmenarejo, 5",
+                                    "123456789", "28345")
 
-        self.assertEqual("Product ID should be an EAN13", cm.exception.message)
+        self.assertEqual("Product ID should be an EAN13", order_excep.exception.message)
 
     # TESTS ORDER_TYPE:
 
@@ -130,7 +133,7 @@ class TestRegisterOrder(TestCase):
 
         self.assertEqual("4565371337e0ce39202cbdcba5ba7100", my_value)
 
-        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+        with (open(FILE_STORE, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
@@ -157,11 +160,11 @@ class TestRegisterOrder(TestCase):
         """
         my_order = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_value = my_order.register_order("8435464158875", "apple", "Calle Colmenarejo, 5",
-                                           "123456789", "28345")
+        with self.assertRaises(OrderManagementException) as order_excep:
+            my_order.register_order("8435464158875", "apple", "Calle Colmenarejo, 5",
+                                    "123456789", "28345")
 
-        self.assertEqual("Invalid Order Type", cm.exception.message)
+        self.assertEqual("Invalid Order Type", order_excep.exception.message)
 
     # TESTS ADRESS:
 
@@ -179,7 +182,7 @@ class TestRegisterOrder(TestCase):
 
         self.assertEqual("bc468149c36d67d3e9a7e9fabf297f1a", my_value)
 
-        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+        with (open(FILE_STORE, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
@@ -214,7 +217,7 @@ class TestRegisterOrder(TestCase):
 
         self.assertEqual("09e5d8f8ce7ca08b8aaf2aee97c0b6b5", my_value)
 
-        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+        with (open(FILE_STORE, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
@@ -251,7 +254,7 @@ class TestRegisterOrder(TestCase):
 
         self.assertEqual("bbd5da1ff08e8c4239fd942fc9a0cdc7", my_value)
 
-        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+        with (open(FILE_STORE, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
@@ -288,7 +291,7 @@ class TestRegisterOrder(TestCase):
 
         self.assertEqual("54f0c7650120aa61b3fcf1cb67302ffa", my_value)
 
-        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+        with (open(FILE_STORE, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
@@ -315,11 +318,11 @@ class TestRegisterOrder(TestCase):
         """
         my_order = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarjo, 5",
-                                           "123456789", "28345")
+        with self.assertRaises(OrderManagementException) as order_excep:
+            my_order.register_order("8435464158875", "premium", "Calle Colmenarjo, 5",
+                                    "123456789", "28345")
 
-        self.assertEqual("Invalid Delivery Address", cm.exception.message)
+        self.assertEqual("Invalid Delivery Address", order_excep.exception.message)
 
     def test_register_order_nok_7(self):
         """
@@ -327,12 +330,12 @@ class TestRegisterOrder(TestCase):
         """
         my_order = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_value = my_order.register_order("8435464158875", "premium",
-                                               "Calle Colmenarejo de los Rosales, Olivaress del Júcar, Provincia de Madrid, España,  52, planta 12BAC",
-                                               "123456789", "28345")
+        with self.assertRaises(OrderManagementException) as order_excep:
+            my_order.register_order("8435464158875", "premium",
+                                    "Calle Colmenarejo de los Rosales, Olivaress del Júcar, Provincia de Madrid, España,  52, planta 12BAC",
+                                    "123456789", "28345")
 
-        self.assertEqual("Invalid Delivery Address", cm.exception.message)
+        self.assertEqual("Invalid Delivery Address", order_excep.exception.message)
 
     def test_register_order_nok_8(self):
         """
@@ -340,11 +343,11 @@ class TestRegisterOrder(TestCase):
         """
         my_order = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_value = my_order.register_order("8435464158875", "premium", "CalleColmenarjo,5,Madrid",
-                                           "123456789", "28345")
+        with self.assertRaises(OrderManagementException) as order_excep:
+            my_order.register_order("8435464158875", "premium", "CalleColmenarjo,5,Madrid",
+                                    "123456789", "28345")
 
-        self.assertEqual("Invalid Delivery Address", cm.exception.message)
+        self.assertEqual("Invalid Delivery Address", order_excep.exception.message)
 
     # TESTS PHONE NUMBER:
 
@@ -354,11 +357,11 @@ class TestRegisterOrder(TestCase):
         """
         my_order = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
-                                           "12345678", "28345")
+        with self.assertRaises(OrderManagementException) as order_excep:
+            my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
+                                    "12345678", "28345")
 
-        self.assertEqual("Invalid Phone Number", cm.exception.message)
+        self.assertEqual("Invalid Phone Number", order_excep.exception.message)
 
     def test_register_order_nok_10(self):
         """
@@ -366,11 +369,11 @@ class TestRegisterOrder(TestCase):
         """
         my_order = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
-                                               "1234567890", "28345")
+        with self.assertRaises(OrderManagementException) as order_excep:
+            my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
+                                    "1234567890", "28345")
 
-        self.assertEqual("Invalid Phone Number", cm.exception.message)
+        self.assertEqual("Invalid Phone Number", order_excep.exception.message)
 
     def test_register_order_nok_11(self):
         """
@@ -378,11 +381,11 @@ class TestRegisterOrder(TestCase):
         """
         my_order = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
+        with self.assertRaises(OrderManagementException) as order_excep:
+            my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
                                            "1234567BA", "28345")
 
-        self.assertEqual("Invalid Phone Number", cm.exception.message)
+        self.assertEqual("Invalid Phone Number", order_excep.exception.message)
 
     # TESTS ZIP CODE
 
@@ -400,7 +403,7 @@ class TestRegisterOrder(TestCase):
 
         self.assertEqual("fb6f363e6bc78ebdad9e54ee6a3bde87", my_value)
 
-        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+        with (open(FILE_STORE, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
@@ -435,7 +438,7 @@ class TestRegisterOrder(TestCase):
 
         self.assertEqual("303387598741da38c341cc23e1305712", my_value)
 
-        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+        with (open(FILE_STORE, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
@@ -470,7 +473,7 @@ class TestRegisterOrder(TestCase):
 
         self.assertEqual("706c656dcbbad90fd668517cb17246d6", my_value)
 
-        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+        with (open(FILE_STORE, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
@@ -505,7 +508,7 @@ class TestRegisterOrder(TestCase):
 
         self.assertEqual("c86db80eea5602f18c378c72a7b81de9", my_value)
 
-        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+        with (open(FILE_STORE, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
 
         # Comprobamos que los datos introducidos en el fichero son correctos
@@ -532,11 +535,11 @@ class TestRegisterOrder(TestCase):
         """
         my_order = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
-                                           "123456789", "00345")
+        with self.assertRaises(OrderManagementException) as order_excep:
+            my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
+                                    "123456789", "00345")
 
-        self.assertEqual("Invalid Zip Code", cm.exception.message)
+        self.assertEqual("Invalid Zip Code", order_excep.exception.message)
 
     def test_register_order_nok_13(self):
         """
@@ -544,11 +547,11 @@ class TestRegisterOrder(TestCase):
         """
         my_order = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
-                                           "123456789", "53345")
+        with self.assertRaises(OrderManagementException) as order_excep:
+            my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
+                                    "123456789", "53345")
 
-        self.assertEqual("Invalid Zip Code", cm.exception.message)
+        self.assertEqual("Invalid Zip Code", order_excep.exception.message)
 
     def test_register_order_nok_14(self):
         """
@@ -556,11 +559,11 @@ class TestRegisterOrder(TestCase):
         """
         my_order = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
-                                           "123456789", "2834")
+        with self.assertRaises(OrderManagementException) as order_excep:
+            my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
+                                    "123456789", "2834")
 
-        self.assertEqual("Invalid Zip Code", cm.exception.message)
+        self.assertEqual("Invalid Zip Code", order_excep.exception.message)
 
     def test_register_order_nok_15(self):
         """
@@ -568,11 +571,11 @@ class TestRegisterOrder(TestCase):
         """
         my_order = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
-                                           "123456789", "283455")
+        with self.assertRaises(OrderManagementException) as order_excep:
+            my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
+                                    "123456789", "283455")
 
-        self.assertEqual("Invalid Zip Code", cm.exception.message)
+        self.assertEqual("Invalid Zip Code", order_excep.exception.message)
 
     def test_register_order_nok_16(self):
         """
@@ -580,11 +583,11 @@ class TestRegisterOrder(TestCase):
         """
         my_order = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_value = my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
-                                           "123456789", "283AA")
+        with self.assertRaises(OrderManagementException) as order_excep:
+            my_order.register_order("8435464158875", "premium", "Calle Colmenarejo, 5",
+                                    "123456789", "283AA")
 
-        self.assertEqual("Invalid Zip Code", cm.exception.message)
+        self.assertEqual("Invalid Zip Code", order_excep.exception.message)
 
     # TESTS SALIDA MD5
     # Es una función interna, no es necesario comprobar su validez
