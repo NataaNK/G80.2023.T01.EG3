@@ -24,7 +24,8 @@ class TestDeliverProduct(TestCase):
         """
         my_delivery = OrderManager()
         # El método debe devolver True
-        self.assertTrue(my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c"))
+        self.assertTrue(my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a28"
+                                                    "08dd0c6841dd12c1932e9ad9499b243c"))
 
         # Ahora, comprobamos que los datos que se han metido en el json son los correctos.
         # Abrimos el fichero que guarda la información de las entregas
@@ -38,7 +39,8 @@ class TestDeliverProduct(TestCase):
         while not found and i < len(deliveries):
             item = deliveries[i]
             if (item["_OrderDelivery__delivery_day"] == 1678406400.0
-                    and item["_OrderDelivery__tracking_code"] == "c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c"):
+                    and item["_OrderDelivery__tracking_code"] ==
+                        "c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c"):
                 found = True
             i += 1
 
@@ -51,8 +53,9 @@ class TestDeliverProduct(TestCase):
         """
         my_delivery = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243")
+        with self.assertRaises(OrderManagementException) as order_except:
+            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a28"
+                                        "08dd0c6841dd12c1932e9ad9499b243")
 
         self.assertEqual("Tracking Code should be a SHA256", order_except.exception.message)
 
@@ -74,8 +77,9 @@ class TestDeliverProduct(TestCase):
 
         my_delivery = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c")
+        with self.assertRaises(OrderManagementException) as order_except:
+            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a28"
+                                        "08dd0c6841dd12c1932e9ad9499b243c")
 
         self.assertEqual("Wrong store shipping file path", order_except.exception.message)
 
@@ -106,8 +110,9 @@ class TestDeliverProduct(TestCase):
 
         my_delivery = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c")
+        with self.assertRaises(OrderManagementException) as order_except:
+            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a28"
+                                        "08dd0c6841dd12c1932e9ad9499b243c")
 
         self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
@@ -144,8 +149,9 @@ class TestDeliverProduct(TestCase):
 
         my_delivery = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c")
+        with self.assertRaises(OrderManagementException) as order_except:
+            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a28"
+                                        "08dd0c6841dd12c1932e9ad9499b243c")
 
         self.assertEqual("Shipping Order not Found", order_except.exception.message)
 
@@ -167,8 +173,9 @@ class TestDeliverProduct(TestCase):
         """
         my_delivery = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243d")
+        with self.assertRaises(OrderManagementException) as order_except:
+            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a28"
+                                        "08dd0c6841dd12c1932e9ad9499b243d")
 
         self.assertEqual("Shipping Order not Found", order_except.exception.message)
 
@@ -180,7 +187,8 @@ class TestDeliverProduct(TestCase):
         """
         my_delivery = OrderManager()
         # La función debe delvolver True
-        self.assertTrue(my_delivery.deliver_product("ebf15a34d6451a7314a74ac395bfcc3d00e5e34a0fafe51fe9e1d0680928294d"))
+        self.assertTrue(my_delivery.deliver_product("ebf15a34d6451a7314a74ac395bfcc3d"
+                                                    "00e5e34a0fafe51fe9e1d0680928294d"))
 
         # Ahora, comprobamos que los datos que se han metido en el json son los correctos.
         # Abrimos el fichero que guarda la información de las entregas
@@ -194,8 +202,8 @@ class TestDeliverProduct(TestCase):
         while not found and i < len(deliveries):
             item = deliveries[i]
             if (item["_OrderDelivery__delivery_day"] == 1678924800.0
-                    and item[
-                        "_OrderDelivery__tracking_code"] == "ebf15a34d6451a7314a74ac395bfcc3d00e5e34a0fafe51fe9e1d0680928294d"):
+                    and item["_OrderDelivery__tracking_code"] ==
+                        "ebf15a34d6451a7314a74ac395bfcc3d00e5e34a0fafe51fe9e1d0680928294d"):
                 found = True
             i += 1
 
@@ -222,8 +230,9 @@ class TestDeliverProduct(TestCase):
 
         my_delivery = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c")
+        with self.assertRaises(OrderManagementException) as order_except:
+            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a28"
+                                        "08dd0c6841dd12c1932e9ad9499b243c")
 
         self.assertEqual("Invalid Delivery Day", order_except.exception.message)
 
@@ -246,8 +255,9 @@ class TestDeliverProduct(TestCase):
         """
         my_delivery = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c")
+        with self.assertRaises(OrderManagementException) as order_except:
+            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a28"
+                                        "08dd0c6841dd12c1932e9ad9499b243c")
 
         self.assertEqual("Invalid Delivery Day", order_except.exception.message)
 
@@ -273,8 +283,9 @@ class TestDeliverProduct(TestCase):
 
         my_delivery = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c")
+        with self.assertRaises(OrderManagementException) as order_except:
+            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a28"
+                                        "08dd0c6841dd12c1932e9ad9499b243c")
 
         self.assertEqual("Invalid or Corrupt SHA-256 Code", order_except.exception.message)
 
@@ -309,7 +320,8 @@ class TestDeliverProduct(TestCase):
 
         my_delivery = OrderManager()
         # La función debe delvolver True
-        self.assertTrue(my_delivery.deliver_product("4bab3094ecf6f34afe70c175a3e2ffafc407a59056eb5cccb4232158deb64dae"))
+        self.assertTrue(my_delivery.deliver_product("4bab3094ecf6f34afe70c175a3e2ffaf"
+                                                    "c407a59056eb5cccb4232158deb64dae"))
 
         # Ahora, comprobamos que los datos que se han metido en el json son los correctos.
         # Abrimos el fichero que guarda la información de las entregas
@@ -323,7 +335,8 @@ class TestDeliverProduct(TestCase):
         while not found and i < len(my_deliveries):
             item = my_deliveries[i]
             if (item["_OrderDelivery__delivery_day"] == 1678406400.0
-                    and item["_OrderDelivery__tracking_code"] == "4bab3094ecf6f34afe70c175a3e2ffafc407a59056eb5cccb4232158deb64dae"):
+                    and item["_OrderDelivery__tracking_code"] ==
+                        "4bab3094ecf6f34afe70c175a3e2ffafc407a59056eb5cccb4232158deb64dae"):
                 found = True
             i += 1
 
@@ -376,8 +389,9 @@ class TestDeliverProduct(TestCase):
 
         my_delivery = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c")
+        with self.assertRaises(OrderManagementException) as order_except:
+            my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a28"
+                                        "08dd0c6841dd12c1932e9ad9499b243c")
 
         self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
@@ -401,9 +415,11 @@ class TestDeliverProduct(TestCase):
         my_delivery_repetido = OrderManager()
         my_delivery = OrderManager()
         # Nos aseguramos que el pedido está antes en la lista de pedidos entregados
-        my_delivery_repetido.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c")
+        my_delivery_repetido.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a28"
+                                             "08dd0c6841dd12c1932e9ad9499b243c")
         # El método debe devolver True
-        self.assertTrue(my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c"))
+        self.assertTrue(my_delivery.deliver_product("c7d0c3b0098a98d782981e6c5d7f5a28"
+                                                    "08dd0c6841dd12c1932e9ad9499b243c"))
 
         # Ahora, comprobamos que los datos que se han metido en el json son los correctos.
         # Abrimos el fichero que guarda la información de las entregas
@@ -417,7 +433,8 @@ class TestDeliverProduct(TestCase):
         while not found and i < len(deliveries):
             item = deliveries[i]
             if (item["_OrderDelivery__delivery_day"] == 1678406400.0
-                    and item["_OrderDelivery__tracking_code"] == "c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c"):
+                    and item["_OrderDelivery__tracking_code"] ==
+                        "c7d0c3b0098a98d782981e6c5d7f5a2808dd0c6841dd12c1932e9ad9499b243c"):
                 found = True
             i += 1
 
