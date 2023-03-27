@@ -1,3 +1,4 @@
+"""Creador"""
 import json
 import os
 from pathlib import Path
@@ -9,15 +10,16 @@ SECURITY = True
 NUM_TEST = 66
 if not SECURITY:
     for i in range(NUM_TEST):
-        file = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/json_tests/mytest"+str(i+1)+".json"
+        FILE = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/" \
+                                  "json_files/json_tests/mytest" + str(i+1) +".json"
 
-        if os.path.isfile(file):
-                os.remove(file)
+        if os.path.isfile(FILE):
+            os.remove(FILE)
         data = []
         new_dict = {"OrderID": "03de4c31222c38cbce5957655a0b5f28",
                 "ContactEmail": "emaildeprueba@gmail.com"}
 
         data.append(new_dict)
 
-        with open(file, "w", encoding= "utf8") as file1:
-                json.dump(new_dict, file1, indent=2)
+        with open(FILE, "w", encoding="utf8") as file1:
+            json.dump(new_dict, file1, indent=2)

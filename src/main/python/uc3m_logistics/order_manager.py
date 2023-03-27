@@ -431,4 +431,3 @@ class OrderManager:
         """
         if sha256_pattern.fullmatch(sha) is None:
             raise ValueError("Invalid SHA-256 Format")
-
