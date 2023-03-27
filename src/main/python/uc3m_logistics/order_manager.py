@@ -9,10 +9,9 @@ correspondientes cuando éstos no son válidos"""
 import re
 import json
 from pathlib import Path
-import os
-import freezegun
 import datetime
 from datetime import datetime
+import freezegun
 from .order_management_exception import OrderManagementException
 from .order_request import OrderRequest
 from .order_shipping import OrderShipping
@@ -33,7 +32,7 @@ class OrderManager:
         pass
 
     @staticmethod
-    def validate_ean13(ean13_code):
+    def __validate_ean13(ean13_code):
         """
             Esta función verifica que el código proporcionado como ean13
             sea sintácticamente correcto además de comprobar si el último
@@ -68,7 +67,7 @@ class OrderManager:
 
         return validate
 
-    def validate_order_type(self, order_type):
+    def __validate_order_type(self, order_type):
         """
         Lanza una excepción si el tipo de envío es incorrecto.
         No importa si introducen el tipo en mayúsculas o mínusculas.
@@ -76,7 +75,7 @@ class OrderManager:
         if order_type.upper() != "PREMIUM" and order_type.upper() != "REGULAR":
             raise ValueError("Invalid Order Type")
 
-    def validate_deivery_address(self, delivery):
+    def __validate_deivery_address(self, delivery):
         """
         Lanza una excepción si la dirección es incorrecta
         (entre 20 y 100 caracteres con al menos 2 cadenas separadas
@@ -97,22 +96,22 @@ class OrderManager:
         if not correct_lenght or not separation:
             raise ValueError("Invalid Delivery Address")
 
-    def validate_phone_number(self, number):
+    def __validate_phone_number(self, number):
         """
         Lanza una excepción si el número de teléfono es incorrecto
         """
         if Phone_number_pattern.fullmatch(number) is None:
             raise ValueError("Invalid Phone Number")
 
-    def validate_zip_code(self, zip):
+    def __validate_zip_code(self, zip_code):
         """
         Lanza una excepción si el código zip no es válido
         """
         validate = True
-        if zip_code_pattern.fullmatch(zip) is None:
+        if zip_code_pattern.fullmatch(zip_code) is None:
             validate = False
         else:
-            if int(zip[0:2]) < 1 or int(zip[0:2]) > 52:
+            if int(zip_code[0:2]) < 1 or int(zip_code[0:2]) > 52:
                 validate = False
 
         if not validate:
@@ -130,42 +129,42 @@ class OrderManager:
 
         # Excepciones sobre los datos del pedido
         try:
-            self.validate_ean13(product_id)
-        except ValueError as vl:
-            raise OrderManagementException("Product ID should be an EAN13") from vl
+            self.__validate_ean13(product_id)
+        except ValueError as val_err:
+            raise OrderManagementException("Product ID should be an EAN13") from val_err
 
         try:
-            self.validate_order_type(order_type)
-        except ValueError as vl:
-            raise OrderManagementException("Invalid Order Type") from vl
+            self.__validate_order_type(order_type)
+        except ValueError as val_err:
+            raise OrderManagementException("Invalid Order Type") from val_err
 
         try:
-            self.validate_deivery_address(delivery_address)
-        except ValueError as vl:
-            raise OrderManagementException("Invalid Delivery Address") from vl
+            self.__validate_deivery_address(delivery_address)
+        except ValueError as val_err:
+            raise OrderManagementException("Invalid Delivery Address") from val_err
 
         try:
-            self.validate_phone_number(phone_number)
-        except ValueError as vl:
-            raise OrderManagementException("Invalid Phone Number") from vl
+            self.__validate_phone_number(phone_number)
+        except ValueError as val_err:
+            raise OrderManagementException("Invalid Phone Number") from val_err
 
         try:
-            self.validate_zip_code(zip_code)
-        except ValueError as vl:
-            raise OrderManagementException("Invalid Zip Code") from vl
+            self.__validate_zip_code(zip_code)
+        except ValueError as val_err:
+            raise OrderManagementException("Invalid Zip Code") from val_err
 
         # Generamos el objeto "pedido"
         my_order = OrderRequest(product_id, order_type, delivery_address,
                                 phone_number, zip_code)
 
         # Añadimos la información del pedido a una lista de json's
-        JSON_STORE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
-        file_store = JSON_STORE_PATH + "store_order_request.json"
+        json_file_path = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
+        file_store = json_file_path + "store_order_request.json"
 
         try:
             with open(file_store, "r", encoding="UTF-8", newline="") as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             data_list = []
         except json.JSONDecodeError as ex:
             raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
@@ -183,7 +182,7 @@ class OrderManager:
         # Devolvemos el hash MD5
         return my_order.order_id
 
-    def validate_content_json(self, load_json):
+    def __validate_content_json(self, load_json):
         """
         Recibe un json decodificado a diccionario y devuelve una excepción
         si no tiene la cantidad de contenido necesario para el método
@@ -191,23 +190,23 @@ class OrderManager:
         'OrderID' y 'ContactEmail'
         """
         validate = True
-        OrderID = "OrderID"
-        ContactEmail = "ContactEmail"
+        order_id = "OrderID"
+        contact_email = "ContactEmail"
 
-        if (OrderID not in load_json) or (ContactEmail not in load_json):
+        if (order_id not in load_json) or (contact_email not in load_json):
             validate = False
 
         if not validate:
             raise ValueError("Wrong input file data: should have 'OrderID' and 'ContactEmail'")
 
-    def validate_md5(self, md5):
+    def __validate_md5(self, md5):
         """
         Lanza una excepción si el código md5 es inválido
         """
         if md5_pattern.fullmatch(md5) is None:
             raise ValueError("Invalid MD5")
 
-    def validate_email(self, email):
+    def __validate_email(self, email):
         """
         Lanza una excepción si el email es inválido 
         """
@@ -215,42 +214,48 @@ class OrderManager:
             raise ValueError("Invalid Email Format")
 
     def send_product(self, input_file):
-
+        """
+        Gestiona el envío de un producto, generando un código de seguimiento sobre el mismo
+        y lo almacena en store_shipping_order
+        """
         # Abrimos el fichero json de entrada (información del envío) y lo decodificamos
         try:
             with open(input_file, "r", encoding="UTF-8", newline="") as file:
-                input = json.load(file)
+                input_json = json.load(file)
         except FileNotFoundError as ex:
-            raise OrderManagementException("Wrong input file path")
+            raise OrderManagementException("Wrong input file path") from ex
         except json.JSONDecodeError as ex:
             raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
 
         # Comprobamos que la entrada contiene los datos necesarios
         try:
-            self.validate_content_json(input)
-        except ValueError as vl:
-            raise OrderManagementException("Wrong input file data: should have 'OrderID' and 'ContactEmail'")
+            self.__validate_content_json(input_json)
+        except ValueError as val_err:
+            raise OrderManagementException("Wrong input file data: "
+                                           "should have 'OrderID' and 'ContactEmail'") from val_err
 
         # Guardamos la información del envío
-        order_id = input["OrderID"]
-        email = input["ContactEmail"]
+        order_id = input_json["OrderID"]
+        email = input_json["ContactEmail"]
 
         try:
-            self.validate_md5(order_id)
-        except ValueError as vl:
-            raise OrderManagementException("Order ID should be a MD5") from vl
+            self.__validate_md5(order_id)
+        except ValueError as val_err:
+            raise OrderManagementException("Order ID should be a MD5") from val_err
 
         try:
-            self.validate_email(email)
-        except ValueError as vl:
-            raise OrderManagementException("Invalid Email Format") from vl
+            self.__validate_email(email)
+        except ValueError as val_err:
+            raise OrderManagementException("Invalid Email Format") from val_err
 
         # Abrimos el fichero que guarda la información de los pedidos
         try:
-            with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_order_request.json", "r", encoding="UTF-8", newline="") as file:
+            with open(str(Path.home()) +
+                      "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_order_request.json",
+                      "r", encoding="UTF-8", newline="") as file:
                 order_request_list = json.load(file)
         except FileNotFoundError as ex:
-            raise OrderManagementException("Wrong order request file path")
+            raise OrderManagementException("Wrong order request file path") from ex
         except json.JSONDecodeError as ex:
             raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
 
@@ -293,7 +298,9 @@ class OrderManager:
 
         # Una vez generado my_shipp, generamos un fichero en el que se almacenarán todos los envíos
         try:
-            with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_shipping_order.json", "r", encoding="UTF-8", newline="") as file:
+            with open(str(Path.home()) +
+                      "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_shipping_order.json",
+                      "r", encoding="UTF-8", newline="") as file:
                 data_list = json.load(file)
         except FileNotFoundError as ex:
             data_list = []
@@ -305,7 +312,9 @@ class OrderManager:
             data_list.append(my_shipp.__dict__)
 
         try:
-            with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_shipping_order.json", "w", encoding="UTF-8", newline="") as file:
+            with open(str(Path.home()) +
+                      "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_shipping_order.json",
+                      "w", encoding="UTF-8", newline="") as file:
                 json.dump(data_list, file, indent=2)
         except FileNotFoundError as ex:
             raise OrderManagementException("Wrong file or file path") from ex
@@ -313,7 +322,7 @@ class OrderManager:
         # Por último, devolvemos el código de rastreo
         return my_shipp.tracking_code
 
-    def validate_sha256(self, sha):
+    def __validate_sha256(self, sha):
         """
         Lanza una excepción si el código de registro SHA256 es inválido
         """
@@ -321,19 +330,24 @@ class OrderManager:
             raise ValueError("Invalid SHA-256 Format")
 
     def deliver_product(self, tracking_number) -> bool:
-
+        """
+        Función que gestiona la entrega de un producto, almacenando la información
+        en el almacén store_deliveries
+        """
         # Comprobamos que el SHA-256 es válido
         try:
-            self.validate_sha256(tracking_number)
-        except ValueError as vl:
-            raise OrderManagementException("Tracking Code should be a SHA256") from vl
+            self.__validate_sha256(tracking_number)
+        except ValueError as val_err:
+            raise OrderManagementException("Tracking Code should be a SHA256") from val_err
 
         # Abrimos el almacén con la información de los envíos
         try:
-            with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_shipping_order.json", "r", encoding="UTF-8", newline="") as file:
+            with open(str(Path.home()) +
+                      "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_shipping_order.json",
+                      "r", encoding="UTF-8", newline="") as file:
                 shippings = json.load(file)
         except FileNotFoundError as ex:
-            raise OrderManagementException("Wrong store shipping file path")
+            raise OrderManagementException("Wrong store shipping file path") from ex
         except json.JSONDecodeError as ex:
             raise OrderManagementException("Json Decode Error - Wrong Json format") from ex
 
@@ -375,7 +389,7 @@ class OrderManager:
             raise OrderManagementException("Invalid Delivery Day")
         # Además, una vez entregado el pedido no es posible que la fecha de entrega
         # sea superior al día de hoy, por lo que tampoco será válida
-        elif delivery_day > hoy:
+        if delivery_day > hoy:
             raise OrderManagementException("Invalid Delivery Day")
 
         # Una vez comprobada la fecha, generamos de nuevo el SHA-256
@@ -394,7 +408,9 @@ class OrderManager:
 
         # Generamos el fichero donde se registrarán todas las entregas
         try:
-            with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_deliveries.json", "r", encoding="UTF-8", newline="") as file:
+            with open(str(Path.home()) +
+                      "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_deliveries.json",
+                      "r", encoding="UTF-8", newline="") as file:
                 delivery_data = json.load(file)
         except FileNotFoundError as ex:
             delivery_data = []
@@ -406,8 +422,9 @@ class OrderManager:
         if my_delivery.__dict__ not in delivery_data:
             delivery_data.append(my_delivery.__dict__)
 
-        with open(str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_deliveries.json", "w", encoding="UTF-8", newline="") as file:
-                json.dump(delivery_data, file, indent=2)
-
+        with open(str(Path.home()) +
+                  "/PycharmProjects/G80.2023.T01.EG3/src/json_files/store_deliveries.json",
+                  "w", encoding="UTF-8", newline="") as file:
+            json.dump(delivery_data, file, indent=2)
 
         return True

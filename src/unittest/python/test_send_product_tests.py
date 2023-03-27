@@ -1,6 +1,6 @@
 """Autores: Natalia Rodríguez Navarro, Alberto Penas Díaz
 
-test_send_product.py: Clase para testear el método send_product()
+test_send_product_tests.py: Clase para testear el método send_product()
 de OrderManager"""
 
 from unittest import TestCase

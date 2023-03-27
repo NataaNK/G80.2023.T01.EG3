@@ -1,6 +1,6 @@
 """Autores: Natalia Rodríguez Navarro, Alberto Penas Díaz
 
-test_deliver_product.py: Clase para testear el método deliver_product()
+test_deliver_product_tests.py: Clase para testear el método deliver_product()
 de OrderManager"""
 
 from unittest import TestCase
