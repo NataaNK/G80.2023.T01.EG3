@@ -1,11 +1,13 @@
-"""MODULE: order_delivery. Contains the delivery order class"""
+"""Autores: Natalia Rodríguez Navarro, Alberto Penas Díaz
+
+order_delivery.py: Cpntiene la clase delivery order"""
+
 import json
-from datetime import datetime
 
 class OrderDelivery():
     """Class representing the information of a delivered product"""
-    def __init__(self, tracking_code, date = datetime.timestamp(datetime.utcnow())):
-        # Si no se especifica ninguna fecha, por defecto se introduce la fecha actual
+
+    def __init__(self, tracking_code, date):
         self.__delivery_day = date
         self.__tracking_code = tracking_code
 
@@ -15,13 +17,13 @@ class OrderDelivery():
     @property
     def delivery_day(self):
         """
-        Atribute representing the delivery day of the product
+        Attribute representing the delivery day of the product
         """
         return self.__delivery_day
 
     @property
     def tracking_code(self):
         """
-        Atribute representing the delivery day of the product
+        Attribute representing the delivery day of the product
         """
         return self.__tracking_code

@@ -3,7 +3,7 @@
 test_register_order_tests.py: Clase para testear el método register_order()
 de OrderManager"""
 
-from unittest import TestCase
+import unittest
 import json
 from pathlib import Path
 from freezegun import freeze_time
@@ -244,7 +244,8 @@ class TestRegisterOrder(TestCase):
         Adress 99 char
         """
         data = ["8435464158875", "premium",
-                "Calle Colmenarejo de los Rosales, Olivares del Júcar, Provincia de Madrid, España,  52, planta 12BA",
+                "Calle Colmenarejo de los Rosales, Olivares del Júcar, Provincia de Madrid,"
+                " España,  52, planta 12BA",
                 "123456789", "28345"]
 
         my_order = OrderManager()
@@ -281,7 +282,8 @@ class TestRegisterOrder(TestCase):
         Adress 100 char
         """
         data = ["8435464158875", "premium",
-                "Calle Colmenarejo de los Rosales, Olivares del Júcar, Provincia de Madrid, España,  52, planta 12BAC",
+                "Calle Colmenarejo de los Rosales, Olivares del Júcar, Provincia de Madrid,"
+                " España,  52, planta 12BAC",
                 "123456789", "28345"]
 
         my_order = OrderManager()
@@ -332,7 +334,8 @@ class TestRegisterOrder(TestCase):
 
         with self.assertRaises(OrderManagementException) as order_excep:
             my_order.register_order("8435464158875", "premium",
-                                    "Calle Colmenarejo de los Rosales, Olivaress del Júcar, Provincia de Madrid, España,  52, planta 12BAC",
+                                    "Calle Colmenarejo de los Rosales, Olivaress del Júcar,"
+                                    " Provincia de Madrid, España,  52, planta 12BAC",
                                     "123456789", "28345")
 
         self.assertEqual("Invalid Delivery Address", order_excep.exception.message)

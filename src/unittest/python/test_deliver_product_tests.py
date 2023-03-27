@@ -3,7 +3,7 @@
 test_deliver_product_tests.py: Clase para testear el método deliver_product()
 de OrderManager"""
 
-from unittest import TestCase
+import unittest
 import shutil
 import json
 import os
@@ -12,7 +12,7 @@ from freezegun import freeze_time
 from uc3m_logistics import OrderManager
 from uc3m_logistics import OrderManagementException
 
-class TestDeliverProduct(TestCase):
+class TestDeliverProduct(unittest.TestCase):
     """
     Clase para testear el método deliver_product()
     de OrderManager
@@ -656,3 +656,6 @@ class TestDeliverProduct(TestCase):
                                      "json_files/store_shipping_order.json", "w",
                   encoding="UTF-8", newline="") as file:
             json.dump(shippings, file, indent=2)
+
+if __name__ == '__main__':
+    unittest.main()

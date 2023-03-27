@@ -1,10 +1,8 @@
 """Autores: Natalia Rodríguez Navarro, Alberto Penas Díaz
 
-OrderManager.py: En este módulo se recibe la información de un pedido,
-se obtiene su firma MD5 y se guardan los datos en un fichero (antes se
-valida el código del producto según la norma EAN13, los tipos de envíos,
-las direcciones, teléfonos y códigos postales generando las excepciones
-correspondientes cuando éstos no son válidos"""
+OrderManager.py: En este módulo corresponde a la clase
+OrderManager, la cual proviene de los métodos necesarios para
+gestionar los pedidos"""
 
 import re
 import json
@@ -27,95 +25,13 @@ email_pattern = re.compile(r"[a-z0-9]+@[a-z]+\.[a-z]{1,3}$")
 sha256_pattern = re.compile("[a-fA-F0-9]{64}$")
 
 class OrderManager:
-    """Class for providing the methods for managing the orders"""
+    """
+    Clase que proviene de los métodos necesarios para gestionar
+    los pedidos
+    """
+
     def __init__(self):
         pass
-
-    @staticmethod
-    def __validate_ean13(ean13_code):
-        """
-            Esta función verifica que el código proporcionado como ean13
-            sea sintácticamente correcto además de comprobar si el último
-            dígito de control es el correcto.
-            :param ean13: str
-            :return: bool
-        """
-        validate = True
-        # Comprobación de sintaxis
-        if eanPattern.fullmatch(ean13_code) is None:
-            validate = False
-        else:
-            suma = 0
-            # Índice
-            i = 0
-            # Según la  conveción EAN13 el último dígito del código debe
-            # ser la resta de la potencia de diez más cercana a
-            # la suma de los pares multiplicados por tres y los impares
-            # menos ese mismo número.
-            while i != len(ean13_code) - 1:
-                suma += int(ean13_code[i]) * 3 \
-                        if (i % 2) != 0 \
-                        else int(ean13_code[i])
-                i += 1
-
-            if int(ean13_code[-1]) != (10 - suma % 10):
-                validate = False
-
-        # Lanzamos excepción si el código es incorrecto
-        if not validate:
-            raise ValueError("Product ID should be an EAN13")
-
-        return validate
-
-    def __validate_order_type(self, order_type):
-        """
-        Lanza una excepción si el tipo de envío es incorrecto.
-        No importa si introducen el tipo en mayúsculas o mínusculas.
-        """
-        if order_type.upper() != "PREMIUM" and order_type.upper() != "REGULAR":
-            raise ValueError("Invalid Order Type")
-
-    def __validate_deivery_address(self, delivery):
-        """
-        Lanza una excepción si la dirección es incorrecta
-        (entre 20 y 100 caracteres con al menos 2 cadenas separadas
-        por un espacio blanco)
-        """
-        if len(delivery) < 20 or len(delivery) > 100:
-            correct_lenght = False
-        else:
-            correct_lenght = True
-
-        separation = False
-        i = 0
-        while not separation and i < len(delivery):
-            if delivery[i] == ' ':
-                separation = True
-            i += 1
-
-        if not correct_lenght or not separation:
-            raise ValueError("Invalid Delivery Address")
-
-    def __validate_phone_number(self, number):
-        """
-        Lanza una excepción si el número de teléfono es incorrecto
-        """
-        if Phone_number_pattern.fullmatch(number) is None:
-            raise ValueError("Invalid Phone Number")
-
-    def __validate_zip_code(self, zip_code):
-        """
-        Lanza una excepción si el código zip no es válido
-        """
-        validate = True
-        if zip_code_pattern.fullmatch(zip_code) is None:
-            validate = False
-        else:
-            if int(zip_code[0:2]) < 1 or int(zip_code[0:2]) > 52:
-                validate = False
-
-        if not validate:
-            raise ValueError("Invalid Zip Code")
 
 
     def register_order(self, product_id, order_type, delivery_address, phone_number, zip_code):
@@ -182,42 +98,13 @@ class OrderManager:
         # Devolvemos el hash MD5
         return my_order.order_id
 
-    def __validate_content_json(self, load_json):
-        """
-        Recibe un json decodificado a diccionario y devuelve una excepción
-        si no tiene la cantidad de contenido necesario para el método
-        'send_product(). Es decir, si no contiene dos claves denominadas
-        'OrderID' y 'ContactEmail'
-        """
-        validate = True
-        order_id = "OrderID"
-        contact_email = "ContactEmail"
-
-        if (order_id not in load_json) or (contact_email not in load_json):
-            validate = False
-
-        if not validate:
-            raise ValueError("Wrong input file data: should have 'OrderID' and 'ContactEmail'")
-
-    def __validate_md5(self, md5):
-        """
-        Lanza una excepción si el código md5 es inválido
-        """
-        if md5_pattern.fullmatch(md5) is None:
-            raise ValueError("Invalid MD5")
-
-    def __validate_email(self, email):
-        """
-        Lanza una excepción si el email es inválido 
-        """
-        if email_pattern.fullmatch(email) is None:
-            raise ValueError("Invalid Email Format")
 
     def send_product(self, input_file):
         """
-        Gestiona el envío de un producto, generando un código de seguimiento sobre el mismo
-        y lo almacena en store_shipping_order
+        Gestiona el envío de un producto, devolviendo un código de seguimiento sobre
+        el mismo y almacenándolo en store_shipping_order.json
         """
+
         # Abrimos el fichero json de entrada (información del envío) y lo decodificamos
         try:
             with open(input_file, "r", encoding="UTF-8", newline="") as file:
@@ -322,17 +209,11 @@ class OrderManager:
         # Por último, devolvemos el código de rastreo
         return my_shipp.tracking_code
 
-    def __validate_sha256(self, sha):
-        """
-        Lanza una excepción si el código de registro SHA256 es inválido
-        """
-        if sha256_pattern.fullmatch(sha) is None:
-            raise ValueError("Invalid SHA-256 Format")
-
     def deliver_product(self, tracking_number) -> bool:
         """
-        Función que gestiona la entrega de un producto, almacenando la información
-        en el almacén store_deliveries
+        Función que gestiona la entrega de un producto. Comprueba que la información
+        es correcta devolviendo True en tal caso y almacenando la información de la
+        entrega en el almacén store_deliveries
         """
         # Comprobamos que el SHA-256 es válido
         try:
@@ -374,14 +255,14 @@ class OrderManager:
         # Para volver a obtener el SHA-256, hay que determinar cuál fue el tipo
         # de envío escogido
         delivery_time = delivery_day - issued_at
-        if delivery_time == (24*60*60):
+        if delivery_time == (24 * 60 * 60):
             order_type = "premium"
             # Para comprobar que la fecha de envío es la correcta
             # volvemos a calcularla según el tipo de pedido
-            my_delivery_day = issued_at + (24*60*60)
+            my_delivery_day = issued_at + (24 * 60 * 60)
         else:
             order_type = "regular"
-            my_delivery_day = issued_at + (7*24*60*60)
+            my_delivery_day = issued_at + (7 * 24 * 60 * 60)
 
         # Compruebo si la fecha de entrega es igual a la registrada
         hoy = datetime.timestamp(datetime.utcnow())
@@ -405,7 +286,6 @@ class OrderManager:
         if order_check.tracking_code != tracking_number:
             raise OrderManagementException("Invalid or Corrupt SHA-256 Code")
 
-
         # Generamos el fichero donde se registrarán todas las entregas
         try:
             with open(str(Path.home()) +
@@ -428,3 +308,127 @@ class OrderManager:
             json.dump(delivery_data, file, indent=2)
 
         return True
+
+
+    @staticmethod
+    def __validate_ean13(ean13_code):
+        """
+        Esta función verifica que el código proporcionado como ean13
+        sea sintácticamente correcto además de comprobar si el último
+        dígito de control es el correcto.
+        """
+        validate = True
+        # Comprobación de sintaxis
+        if eanPattern.fullmatch(ean13_code) is None:
+            validate = False
+        else:
+            suma = 0
+            # Índice
+            i = 0
+            # Según la  conveción EAN13 el último dígito del código debe
+            # ser la resta de la potencia de diez más cercana a
+            # la suma de los pares multiplicados por tres y los impares
+            # menos ese mismo número.
+            while i != len(ean13_code) - 1:
+                suma += int(ean13_code[i]) * 3 \
+                        if (i % 2) != 0 \
+                        else int(ean13_code[i])
+                i += 1
+
+            if int(ean13_code[-1]) != (10 - suma % 10):
+                validate = False
+
+        # Lanzamos excepción si el código es incorrecto
+        if not validate:
+            raise ValueError("Product ID should be an EAN13")
+
+        return validate
+
+    def __validate_order_type(self, order_type):
+        """
+        Lanza una excepción si el tipo de envío es incorrecto.
+        No importa si introducen el tipo en mayúsculas o mínusculas.
+        """
+        if order_type.upper() != "PREMIUM" and order_type.upper() != "REGULAR":
+            raise ValueError("Invalid Order Type")
+
+    def __validate_deivery_address(self, delivery):
+        """
+        Lanza una excepción si la dirección es incorrecta
+        (entre 20 y 100 caracteres con al menos 2 cadenas separadas
+        por un espacio blanco)
+        """
+        if len(delivery) < 20 or len(delivery) > 100:
+            correct_lenght = False
+        else:
+            correct_lenght = True
+
+        separation = False
+        i = 0
+        while not separation and i < len(delivery):
+            if delivery[i] == ' ':
+                separation = True
+            i += 1
+
+        if not correct_lenght or not separation:
+            raise ValueError("Invalid Delivery Address")
+
+    def __validate_phone_number(self, number):
+        """
+        Lanza una excepción si el número de teléfono es incorrecto
+        """
+        if Phone_number_pattern.fullmatch(number) is None:
+            raise ValueError("Invalid Phone Number")
+
+    def __validate_zip_code(self, zip_code):
+        """
+        Lanza una excepción si el código zip no es válido
+        """
+        validate = True
+        if zip_code_pattern.fullmatch(zip_code) is None:
+            validate = False
+        else:
+            if int(zip_code[0:2]) < 1 or int(zip_code[0:2]) > 52:
+                validate = False
+
+        if not validate:
+            raise ValueError("Invalid Zip Code")
+
+    def __validate_content_json(self, load_json):
+        """
+        Recibe un json decodificado a diccionario y devuelve una excepción
+        si no tiene la cantidad de contenido necesario para el método
+        'send_product(). Es decir, si no contiene dos claves denominadas
+        'OrderID' y 'ContactEmail'
+        """
+        validate = True
+        order_id = "OrderID"
+        contact_email = "ContactEmail"
+
+        if (order_id not in load_json) or (contact_email not in load_json):
+            validate = False
+
+        if not validate:
+            raise ValueError("Wrong input file data: should have 'OrderID' and 'ContactEmail'")
+
+    def __validate_md5(self, md5):
+        """
+        Lanza una excepción si el código md5 es inválido
+        """
+        if md5_pattern.fullmatch(md5) is None:
+            raise ValueError("Invalid MD5")
+
+    def __validate_email(self, email):
+        """
+        Lanza una excepción si el email es inválido 
+        """
+        if email_pattern.fullmatch(email) is None:
+            raise ValueError("Invalid Email Format")
+
+    def __validate_sha256(self, sha):
+        """
+        Lanza una excepción si el código de registro SHA256 es inválido
+        """
+        if sha256_pattern.fullmatch(sha) is None:
+            raise ValueError("Invalid SHA-256 Format")
+
