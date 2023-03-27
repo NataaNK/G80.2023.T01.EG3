@@ -51,10 +51,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -69,10 +69,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -87,10 +87,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -105,10 +105,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -123,10 +123,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -141,11 +141,11 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
         self.assertEqual("Wrong input file data: should have 'OrderID' and 'ContactEmail'",
-                         cm.exception.message)
+                         order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -160,10 +160,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -178,10 +178,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -196,10 +196,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -214,10 +214,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -232,10 +232,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -250,10 +250,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -268,10 +268,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -286,10 +286,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -304,10 +304,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -322,10 +322,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -340,10 +340,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -358,10 +358,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -376,10 +376,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -394,10 +394,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -412,10 +412,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -430,10 +430,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -448,10 +448,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -466,10 +466,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -484,10 +484,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -502,10 +502,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -520,10 +520,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -538,10 +538,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -556,10 +556,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -574,7 +574,7 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
         self.assertEqual("Wrong input file data: should have 'OrderID' and 'ContactEmail'",
@@ -593,7 +593,7 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
         self.assertEqual("Wrong input file data: should have 'OrderID' and 'ContactEmail'",
@@ -612,10 +612,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -630,10 +630,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Order ID should be a MD5", cm.exception.message)
+        self.assertEqual("Order ID should be a MD5", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -648,10 +648,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Order ID should be a MD5", cm.exception.message)
+        self.assertEqual("Order ID should be a MD5", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -666,11 +666,11 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
         self.assertEqual("Wrong input file data: should have 'OrderID' and 'ContactEmail'",
-                         cm.exception.message)
+                         order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -685,11 +685,11 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
         self.assertEqual("Wrong input file data: should have 'OrderID' and 'ContactEmail'",
-                         cm.exception.message)
+                         order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -704,10 +704,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Invalid Email Format", cm.exception.message)
+        self.assertEqual("Invalid Email Format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -722,10 +722,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Invalid Email Format", cm.exception.message)
+        self.assertEqual("Invalid Email Format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -741,10 +741,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Json Decode Error - Wrong Json format", cm.exception.message)
+        self.assertEqual("Json Decode Error - Wrong Json format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -759,11 +759,11 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
         self.assertEqual("Wrong input file data: should have 'OrderID' and 'ContactEmail'",
-                         cm.exception.message)
+                         order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -777,10 +777,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Order ID should be a MD5", cm.exception.message)
+        self.assertEqual("Order ID should be a MD5", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -794,11 +794,11 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
         self.assertEqual("Wrong input file data: should have 'OrderID' and 'ContactEmail'",
-                         cm.exception.message)
+                         order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -827,10 +827,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Invalid Email Format", cm.exception.message)
+        self.assertEqual("Invalid Email Format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -844,10 +844,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Invalid Email Format", cm.exception.message)
+        self.assertEqual("Invalid Email Format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -861,10 +861,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Invalid Email Format", cm.exception.message)
+        self.assertEqual("Invalid Email Format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -893,10 +893,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Invalid Email Format", cm.exception.message)
+        self.assertEqual("Invalid Email Format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -910,10 +910,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Invalid Email Format", cm.exception.message)
+        self.assertEqual("Invalid Email Format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -927,10 +927,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Invalid Email Format", cm.exception.message)
+        self.assertEqual("Invalid Email Format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -945,7 +945,7 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
         self.assertEqual("Invalid Email Format", order_except.exception.message)
@@ -962,10 +962,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Invalid Email Format", cm.exception.message)
+        self.assertEqual("Invalid Email Format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -980,10 +980,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Invalid Email Format", cm.exception.message)
+        self.assertEqual("Invalid Email Format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -997,10 +997,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Invalid Email Format", cm.exception.message)
+        self.assertEqual("Invalid Email Format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -1015,10 +1015,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Invalid Email Format", cm.exception.message)
+        self.assertEqual("Invalid Email Format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -1032,10 +1032,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Invalid Email Format", cm.exception.message)
+        self.assertEqual("Invalid Email Format", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -1050,10 +1050,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Invalid Email Format", cm.exception.message)
+        self.assertEqual("Invalid Email Format", order_except.exception.message)
 
     # VALORES LÍMITE y CLASES DE EQUIVALENCIA
 
@@ -1068,10 +1068,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Order ID should be a MD5", cm.exception.message)
+        self.assertEqual("Order ID should be a MD5", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -1085,10 +1085,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Order ID should be a MD5", cm.exception.message)
+        self.assertEqual("Order ID should be a MD5", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -1102,10 +1102,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Order ID should be a MD5", cm.exception.message)
+        self.assertEqual("Order ID should be a MD5", order_except.exception.message)
 
 
     @freeze_time("2023-03-09")
@@ -1149,11 +1149,10 @@ class TestSendProduct(unittest.TestCase):
         my_order.register_order(ORDER_DATA[0], ORDER_DATA[1], ORDER_DATA[2], ORDER_DATA[3],
                                 ORDER_DATA[4])
 
-        with self.assertRaises(OrderManagementException) as cm:
+        with self.assertRaises(OrderManagementException) as order_except:
             my_order.send_product(input_file)
 
-        self.assertEqual("Invalid Email Format", cm.exception.message)
-
+        self.assertEqual("Invalid Email Format", order_except.exception.message)
 
 
 if __name__ == '__main__':

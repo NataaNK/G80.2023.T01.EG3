@@ -14,7 +14,7 @@ from uc3m_logistics import OrderManagementException
 JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
 FILE_STORE = JSON_FILES_PATH + "store_order_request.json"
 
-class TestRegisterOrder(TestCase):
+class TestRegisterOrder(unittest.TestCase):
     """
     Clase para testear el método register_order()
     de OrderManager
