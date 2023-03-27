@@ -1,12 +1,13 @@
 """Autores: Natalia Rodríguez Navarro, Alberto Penas Díaz
 
-order_delivery.py: Cpntiene la clase delivery order"""
+order_delivery.py: Contiene la clase OrderDelivery"""
 
 import json
 
 class OrderDelivery():
-    """Class representing the information of a delivered product"""
-
+    """
+    Class representing the information of a delivered product
+    """
     def __init__(self, tracking_code, date):
         self.__delivery_day = date
         self.__tracking_code = tracking_code

@@ -1,9 +1,12 @@
 """Autores: Natalia Rodríguez Navarro, Alberto Penas Díaz
 
-Generador de excpciones para el módulo order_manager"""
+order_management_exception.py: Generador de excepciones para
+el módulo order_manager"""
 
 class OrderManagementException(Exception):
-    """Personalised exception for Order Management"""
+    """
+    Personalised exception for Order Management
+    """
     def __init__(self, message):
         self.__message = message
         super().__init__(self.message)

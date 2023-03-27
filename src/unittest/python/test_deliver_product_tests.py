@@ -9,8 +9,8 @@ import json
 import os
 from pathlib import Path
 from freezegun import freeze_time
-from uc3m_logistics import OrderManager
-from uc3m_logistics import OrderManagementException
+from src.main.python.uc3m_logistics import OrderManager
+from src.main.python.uc3m_logistics import OrderManagementException
 
 class TestDeliverProduct(unittest.TestCase):
     """

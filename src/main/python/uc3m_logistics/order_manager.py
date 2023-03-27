@@ -1,8 +1,7 @@
 """Autores: Natalia Rodríguez Navarro, Alberto Penas Díaz
 
-OrderManager.py: En este módulo corresponde a la clase
-OrderManager, la cual proviene de los métodos necesarios para
-gestionar los pedidos"""
+OrderManager.py: Este módulo corresponde a la clase OrderManager,
+la cual proviene de los métodos necesarios para gestionar los pedidos"""
 
 import re
 import json
@@ -40,7 +39,7 @@ class OrderManager:
         el componente obtendrá una firma mediante el algoritmo MD5. (Este valor MD5
         se obtiene del método __str__ de la clase OrderRequest. Esta firma será el
         identificador del pedido y en adelante se denominará OrderID. Además, se
-        almacena en un fichero json todos los datos de la solicitud.
+        almacena en un fichero json todos los datos de la solicitud
         """
 
         # Excepciones sobre los datos del pedido
@@ -101,8 +100,8 @@ class OrderManager:
 
     def send_product(self, input_file):
         """
-        Gestiona el envío de un producto, devolviendo un código de seguimiento sobre
-        el mismo y almacenándolo en store_shipping_order.json
+        Gestiona el envío de un producto, devolviendo un código de seguimiento
+        SHA-256 sobre el mismo y almacenándolo en store_shipping_order.json
         """
 
         # Abrimos el fichero json de entrada (información del envío) y lo decodificamos
@@ -211,9 +210,9 @@ class OrderManager:
 
     def deliver_product(self, tracking_number) -> bool:
         """
-        Función que gestiona la entrega de un producto. Comprueba que la información
+        Método que gestiona la entrega de un producto. Comprueba que la información
         es correcta devolviendo True en tal caso y almacenando la información de la
-        entrega en el almacén store_deliveries
+        entrega en el almacén store_deliveries.json
         """
         # Comprobamos que el SHA-256 es válido
         try:
@@ -315,7 +314,7 @@ class OrderManager:
         """
         Esta función verifica que el código proporcionado como ean13
         sea sintácticamente correcto además de comprobar si el último
-        dígito de control es el correcto.
+        dígito de control es el correcto
         """
         validate = True
         # Comprobación de sintaxis
@@ -328,7 +327,7 @@ class OrderManager:
             # Según la  conveción EAN13 el último dígito del código debe
             # ser la resta de la potencia de diez más cercana a
             # la suma de los pares multiplicados por tres y los impares
-            # menos ese mismo número.
+            # menos ese mismo número
             while i != len(ean13_code) - 1:
                 suma += int(ean13_code[i]) * 3 \
                         if (i % 2) != 0 \
@@ -347,7 +346,7 @@ class OrderManager:
     def __validate_order_type(self, order_type):
         """
         Lanza una excepción si el tipo de envío es incorrecto.
-        No importa si introducen el tipo en mayúsculas o mínusculas.
+        No importa si introducen el tipo en mayúsculas o mínusculas
         """
         if order_type.upper() != "PREMIUM" and order_type.upper() != "REGULAR":
             raise ValueError("Invalid Order Type")
