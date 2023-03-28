@@ -7,8 +7,8 @@ import unittest
 import json
 from pathlib import Path
 from freezegun import freeze_time
-from src.main.python.uc3m_logistics import OrderManager
-from src.main.python.uc3m_logistics import OrderManagementException
+from uc3m_logistics import OrderManager
+from uc3m_logistics import OrderManagementException
 
 # Global Variables
 JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T01.EG3/src/json_files/"
