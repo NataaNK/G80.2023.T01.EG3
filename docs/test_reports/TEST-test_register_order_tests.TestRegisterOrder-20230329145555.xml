@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_register_order_tests.TestRegisterOrder-20230329145555" tests="26" file="test_register_order_tests.py" time="0.150" timestamp="2023-03-29T14:55:56" failures="0" errors="0" skipped="0">
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_nok_1" time="0.002" timestamp="2023-03-29T14:55:55"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_nok_10" time="0.002" timestamp="2023-03-29T14:55:55"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_nok_11" time="0.002" timestamp="2023-03-29T14:55:55"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_nok_12" time="0.001" timestamp="2023-03-29T14:55:55"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_nok_13" time="0.001" timestamp="2023-03-29T14:55:55"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_nok_14" time="0.001" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_nok_15" time="0.001" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_nok_16" time="0.002" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_nok_2" time="0.001" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_nok_3" time="0.001" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_nok_4" time="0.001" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_nok_5" time="0.001" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_nok_6" time="0.001" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_nok_7" time="0.001" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_nok_8" time="0.001" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_nok_9" time="0.001" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_ok10" time="0.053" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_ok7" time="0.010" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_ok8" time="0.008" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_ok9" time="0.008" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_ok_1" time="0.008" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_ok_2" time="0.008" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_ok_3" time="0.009" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_ok_4" time="0.008" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_ok_5" time="0.008" timestamp="2023-03-29T14:55:56"/>
+	<testcase classname="test_register_order_tests.TestRegisterOrder" name="test_register_order_ok_6" time="0.008" timestamp="2023-03-29T14:55:56"/>
+</testsuite>
